@@ -37,6 +37,20 @@ Claude acts as your household's butler. It learns what you buy from your own ord
 
 ---
 
+## Screenshots
+
+All screenshots use a made-up demo household (Alex and Sam) with sample orders and prices.
+
+| | |
+|---|---|
+| **Your page and order history**<br>![Page header](docs/screenshots/01-header.png) | **A word with Claude**: notes, replies and recipe notes<br>![Notes box](docs/screenshots/02-notes.png) |
+| **This week's dinners** and who's cooking<br>![Dinner schedule](docs/screenshots/03-dinners.png) | **Step 1 · Specials**: genuine specials on things you buy<br>![Specials step](docs/screenshots/04-step1-specials.png) |
+| **Step 2 · Core items**: weekly regulars and re-buys<br>![Core items step](docs/screenshots/05-step2-core.png) | **Step 3 · Meals**: forecast-matched dinners<br>![Meals step](docs/screenshots/06-step3-meals.png) |
+| **Step 4 · Extra items**: "We're out of…"<br>![Extra items step](docs/screenshots/07-step4-extras.png) | **Step 5 · Review & send**<br>![Review step](docs/screenshots/08-step5-review.png) |
+| **Recipe view** with serves and User notes<br>![Recipe popup](docs/screenshots/09-recipe.png) | |
+
+---
+
 ## 1. What you need
 
 | Requirement | Why |
@@ -259,6 +273,7 @@ To reset what Claude has learned, ask Claude to clear these files. Your purchase
 - `starter/`: starter rules, product groups and original starter recipes
 - `skills/kitchen-setup`: first-time setup
 - `skills/kitchen-weekly`: weekly runs (full runbook in `references/runbook.md`)
+- `docs/screenshots`: README images only (not part of the installed plugin)
 
 ---
 
