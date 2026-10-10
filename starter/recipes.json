@@ -1,0 +1,1801 @@
+{
+ "_help": "Starter dinners. weight: light | medium | hearty. Ingredients: g = product group (from your order history, see item_groups.csv), fb = fallback Woolworths product if you haven't bought that group before, p = a specific product. extras = pantry items (listed, not auto-added). Add your own recipes or import from Paprika.",
+ "recipes": [
+  {
+   "id": "beef-stirfry",
+   "name": "Beef & veg stir-fry",
+   "weight": "medium",
+   "mins": 20,
+   "serves": 4,
+   "prep": "10 min",
+   "cook": "10 min",
+   "total": "20 min",
+   "amounts": [
+    "500g lean beef strips",
+    "400g bag Woolworths stir-fry vegetables",
+    "1 Mingle chow mein recipe base (40g)",
+    "2 buk choy, quartered",
+    "2 tbsp soy sauce",
+    "1 tsp sesame oil",
+    "4 microwave rice cups (2 × 2-packs)"
+   ],
+   "optional": [],
+   "method": [
+    "Toss beef with 1 tbsp soy sauce and half the Mingle base.",
+    "Heat a wok until smoking with a little oil. Stir-fry beef in two batches, 1–2 min each, then remove.",
+    "Stir-fry the vegetables and buk choy for 3 min.",
+    "Return beef, add remaining Mingle base mixed with 1/3 cup water, remaining soy and sesame oil. Toss 1 min until glossy.",
+    "Serve over heated microwave rice."
+   ],
+   "extras": [
+    "soy sauce",
+    "sesame oil"
+   ],
+   "shares": [
+    "Thai red chicken curry",
+    "Nasi goreng with fried egg",
+    "Duck fried rice"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Beef stir-fry strips",
+     "fb": "Woolworths lean beef strips 500g"
+    },
+    {
+     "p": "Woolworths cook stir fry mix traditional vegetables 400g"
+    },
+    {
+     "p": "Mingle sweet & savoury chow mein recipe base 40g"
+    },
+    {
+     "g": "Microwave rice",
+     "q": 2,
+     "fb": "Sunrice microwave white long grain rice cup 125g x 2 pack"
+    },
+    {
+     "p": "buk choy asian greens each"
+    }
+   ]
+  },
+  {
+   "id": "bolognese-bake",
+   "name": "Bolognese pasta bake",
+   "weight": "hearty",
+   "mins": 45,
+   "serves": 4,
+   "prep": "10 min",
+   "cook": "35 min",
+   "total": "45 min",
+   "amounts": [
+    "500g beef mince",
+    "700g passata",
+    "500g Barilla penne",
+    "1 cup frozen diced onions",
+    "2 tsp garlic paste",
+    "1 tsp dried oregano",
+    "1½ cups grated 4-cheese melt"
+   ],
+   "optional": [],
+   "method": [
+    "Heat oven to 200°C. Cook penne 2 min less than packet time; drain.",
+    "Brown onion and garlic in a large pan, add mince and cook until browned.",
+    "Add passata and oregano, simmer 10 min. Season.",
+    "Stir pasta through the sauce, tip into a baking dish and cover with cheese.",
+    "Bake 15–20 min until bubbling and golden."
+   ],
+   "extras": [
+    "dried oregano"
+   ],
+   "shares": [
+    "Greek pastitsio",
+    "Keema curry with roti",
+    "Cottage pie"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Beef mince",
+     "fb": "Woolworths heart smart extra lean beef mince 500g"
+    },
+    {
+     "g": "Passata",
+     "fb": "Val verde passata sauce 700g"
+    },
+    {
+     "g": "Dried pasta",
+     "fb": "Barilla pasta penne rigate 500g"
+    },
+    {
+     "g": "Frozen diced onions",
+     "fb": "Woolworths prep set go diced frozen onions 500g"
+    },
+    {
+     "g": "Garlic paste",
+     "fb": "Gourmet garden cold blend pastes garlic value 120g"
+    },
+    {
+     "p": "Perfect italiano grated 4 cheese melt 450g"
+    }
+   ]
+  },
+  {
+   "id": "burrito-bowls",
+   "name": "Chicken burrito bowls",
+   "weight": "light",
+   "mins": 25,
+   "serves": 4,
+   "prep": "10 min",
+   "cook": "15 min",
+   "total": "25 min",
+   "amounts": [
+    "500g chicken breast",
+    "2 tbsp taco seasoning",
+    "400g black beans, drained",
+    "4 microwave rice cups (2 × 2-packs)",
+    "2 avocados",
+    "1 red capsicum, diced",
+    "250g cherry tomatoes, halved",
+    "130g sour cream",
+    "1 lime"
+   ],
+   "optional": [],
+   "method": [
+    "Toss chicken with taco seasoning and a little oil. Pan-fry 5–6 min each side until cooked; rest and slice.",
+    "Warm the black beans with a pinch of seasoning.",
+    "Heat rice; squeeze through half the lime.",
+    "Build bowls: rice, beans, chicken, capsicum, tomato, sliced avocado.",
+    "Top with sour cream and lime wedges."
+   ],
+   "extras": [
+    "taco seasoning",
+    "lime"
+   ],
+   "shares": [
+    "Chicken tortilla soup",
+    "Thai red chicken curry",
+    "Mexican stuffed capsicums"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Chicken breast",
+     "fb": "Woolworths rspca approved chicken breast fillet per 300g"
+    },
+    {
+     "g": "Black beans",
+     "fb": "Edgell black beans plant protein 400g"
+    },
+    {
+     "g": "Sour cream",
+     "fb": "Dairy farmers sour cream squeeze pouch 130g"
+    },
+    {
+     "g": "Avocados",
+     "q": 2,
+     "fb": "hass avocado each"
+    },
+    {
+     "g": "Capsicum",
+     "fb": "Red capsicum each"
+    },
+    {
+     "g": "Microwave rice",
+     "q": 2,
+     "fb": "Sunrice microwave white long grain rice cup 125g x 2 pack"
+    },
+    {
+     "g": "Snacking tomatoes",
+     "fb": "Woolworths cherry tomatoes punnet 250g"
+    }
+   ]
+  },
+  {
+   "id": "thai-red-curry",
+   "name": "Thai red chicken curry",
+   "weight": "medium",
+   "mins": 30,
+   "serves": 4,
+   "prep": "10 min",
+   "cook": "20 min",
+   "total": "30 min",
+   "amounts": [
+    "550g chicken thigh fillets, sliced",
+    "3 tbsp Ayam Thai red curry paste",
+    "400ml coconut cream",
+    "1 red capsicum, sliced",
+    "2 buk choy, halved",
+    "1 tbsp fish sauce",
+    "4 microwave rice cups (2 × 2-packs)"
+   ],
+   "optional": [],
+   "method": [
+    "Fry curry paste in a little oil for 1 min until fragrant.",
+    "Add chicken and stir to coat, 3 min.",
+    "Pour in coconut cream and ½ cup water; simmer 10 min.",
+    "Add capsicum and buk choy for the last 4 min. Season with fish sauce.",
+    "Serve with rice."
+   ],
+   "extras": [
+    "fish sauce"
+   ],
+   "shares": [
+    "Chicken laksa",
+    "Thai red pumpkin soup",
+    "Butter chicken with naan"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Chicken thigh fillets",
+     "fb": "Woolworths rspca approved chicken thigh skinless fillets small"
+    },
+    {
+     "g": "Coconut cream",
+     "fb": "Tcc coconut cream 400ml"
+    },
+    {
+     "p": "Ayam paste thai red curry 195g"
+    },
+    {
+     "g": "Capsicum",
+     "fb": "Red capsicum each"
+    },
+    {
+     "p": "buk choy asian greens each"
+    },
+    {
+     "g": "Microwave rice",
+     "q": 2,
+     "fb": "Sunrice microwave white long grain rice cup 125g x 2 pack"
+    }
+   ]
+  },
+  {
+   "id": "butter-chicken",
+   "name": "Butter chicken with naan",
+   "weight": "hearty",
+   "mins": 35,
+   "serves": 4,
+   "prep": "5 min",
+   "cook": "25 min",
+   "total": "30 min",
+   "amounts": [
+    "550g chicken thigh fillets, diced",
+    "1 Mingle butter chicken base (30g)",
+    "300ml cooking cream",
+    "400g canned tomatoes",
+    "1 pack mini naans",
+    "4 microwave rice cups (2 × 2-packs)",
+    "1 pack mini pappadums"
+   ],
+   "optional": [],
+   "method": [
+    "Toss chicken in the Mingle base and brown in a little oil, 5 min.",
+    "Add tomatoes and simmer 10 min.",
+    "Stir in cream and simmer 5 min until thick.",
+    "Warm naans in the oven or a dry pan.",
+    "Serve with rice, naan and pappadums."
+   ],
+   "extras": [],
+   "shares": [
+    "Thai red chicken curry"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Chicken thigh fillets",
+     "fb": "Woolworths rspca approved chicken thigh skinless fillets small"
+    },
+    {
+     "p": "Mingle butter chicken recipe base 30g"
+    },
+    {
+     "g": "Cream",
+     "fb": "Bulla cooking cream 300ml"
+    },
+    {
+     "p": "Simson's pantry mini naans plain 5 pack"
+    },
+    {
+     "g": "Microwave rice",
+     "q": 2,
+     "fb": "Sunrice microwave white long grain rice cup 125g x 2 pack"
+    },
+    {
+     "p": "Patak's ready to eat pappadums mini plain original 75g"
+    }
+   ]
+  },
+  {
+   "id": "slow-beef-mash",
+   "name": "Slow-cooked beef with mash",
+   "weight": "hearty",
+   "mins": 180,
+   "serves": 4,
+   "prep": "15 min",
+   "cook": "3 hr",
+   "total": "3 hr 15 min",
+   "amounts": [
+    "700g gravy beef or chuck, in large chunks",
+    "1L beef stock",
+    "3 carrots, in chunks",
+    "1 cup frozen diced onions",
+    "2 tbsp tomato paste",
+    "2 sprigs thyme",
+    "800g Birds Eye frozen mashed potato (microwave)"
+   ],
+   "optional": [],
+   "method": [
+    "Heat oven to 160°C. Brown beef well in batches in an ovenproof pot.",
+    "Soften onion, add tomato paste and cook 1 min.",
+    "Return beef, add carrots, thyme and stock to just cover.",
+    "Cover and bake 2½–3 hr until the beef falls apart.",
+    "Microwave the Birds Eye mash as per packet (about 8–10 min on high, stirring halfway). Serve with the beef and gravy."
+   ],
+   "extras": [
+    "tomato paste",
+    "thyme"
+   ],
+   "shares": [
+    "Cottage pie",
+    "Beef ragù pappardelle",
+    "Lamb chops, mash & three veg"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Slow-cook beef",
+     "fb": "Woolworths gravy beef slow cook 400g - 750g"
+    },
+    {
+     "g": "Beef stock",
+     "fb": "Campbell's real stock beef 1l"
+    },
+    {
+     "p": "Woolworths australian grown carrots 1kg"
+    },
+    {
+     "p": "Birds eye mashed potato 800g"
+    },
+    {
+     "g": "Frozen diced onions",
+     "fb": "Woolworths prep set go diced frozen onions 500g"
+    }
+   ]
+  },
+  {
+   "id": "confit-duck",
+   "name": "Confit duck legs with mash & greens",
+   "weight": "medium",
+   "mins": 30,
+   "serves": 2,
+   "prep": "5 min",
+   "cook": "25 min",
+   "total": "30 min",
+   "amounts": [
+    "450g Luv-a-Duck confit duck legs",
+    "800g Birds Eye frozen mashed potato (microwave)",
+    "1 bunch broccolini"
+   ],
+   "optional": [],
+   "method": [
+    "Heat oven to 200°C. Place duck legs skin-side up on a lined tray; roast 20–25 min until crisp.",
+    "Microwave the Birds Eye mash as per packet (about 8–10 min on high, stirring halfway).",
+    "Steam or blanch broccolini 3 min.",
+    "Serve duck on mash with broccolini; spoon over any pan juices."
+   ],
+   "extras": [],
+   "shares": [
+    "Duck breast with cherry sauce"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "p": "Luv-a-duck confit duck legs slow cooked 450g"
+    },
+    {
+     "p": "Birds eye mashed potato 800g"
+    },
+    {
+     "p": "Woolworths broccolini bunch each"
+    }
+   ]
+  },
+  {
+   "id": "lamb-chops",
+   "name": "Lamb chops, mash & three veg",
+   "weight": "hearty",
+   "mins": 30,
+   "serves": 4,
+   "prep": "10 min",
+   "cook": "20 min",
+   "total": "30 min",
+   "amounts": [
+    "8 lamb midloin chops",
+    "800g Birds Eye frozen mashed potato (microwave)",
+    "1 head broccoli, in florets",
+    "3 carrots, sliced",
+    "1 sachet gravy mix",
+    "2 tbsp mint sauce"
+   ],
+   "optional": [],
+   "method": [
+    "Season chops and pan-fry or grill 3–4 min each side; rest 5 min.",
+    "Steam carrots 8 min, add broccoli for the last 4 min.",
+    "Microwave the Birds Eye mash as per packet (about 8–10 min on high, stirring halfway). Make gravy as per packet.",
+    "Serve chops with mash, vegetables, gravy and mint sauce."
+   ],
+   "extras": [
+    "gravy mix",
+    "mint sauce"
+   ],
+   "shares": [
+    "Slow-cooked beef with mash",
+    "Cottage pie"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Lamb chops",
+     "fb": "Woolworths lamb midloins chops 3 - 6 pieces 450g - 800g"
+    },
+    {
+     "p": "Birds eye mashed potato 800g"
+    },
+    {
+     "p": "Fresh broccoli each"
+    },
+    {
+     "p": "Woolworths australian grown carrots 1kg"
+    }
+   ]
+  },
+  {
+   "id": "chicken-traybake",
+   "name": "Greek chicken traybake",
+   "weight": "medium",
+   "mins": 50,
+   "serves": 4,
+   "prep": "15 min",
+   "cook": "45 min",
+   "total": "1 hr",
+   "amounts": [
+    "1.1kg chicken drumsticks",
+    "1 Mingle Greek garlic seasoning (45g)",
+    "2 sweet potatoes, in chunks",
+    "2 zucchini, in chunks",
+    "1 red capsicum, in chunks",
+    "250g cherry tomatoes",
+    "2 tbsp olive oil",
+    "1 lemon"
+   ],
+   "optional": [],
+   "method": [
+    "Heat oven to 210°C.",
+    "Toss drumsticks and sweet potato with oil and the Mingle seasoning on a large tray. Roast 25 min.",
+    "Add zucchini, capsicum and tomatoes; roast another 20 min until chicken is cooked through.",
+    "Squeeze over lemon and serve."
+   ],
+   "extras": [
+    "olive oil",
+    "lemon"
+   ],
+   "shares": [
+    "Gnocchi & chorizo traybake",
+    "Chicken burrito bowls"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Chicken drumsticks / maryland",
+     "fb": "Woolworths rspca approved chicken drumsticks bulk 1.1kg -"
+    },
+    {
+     "p": "Mingle greek garlic seasoning 45g"
+    },
+    {
+     "q": 2,
+     "p": "zucchini green each"
+    },
+    {
+     "g": "Capsicum",
+     "fb": "Red capsicum each"
+    },
+    {
+     "g": "Snacking tomatoes",
+     "fb": "Woolworths cherry tomatoes punnet 250g"
+    },
+    {
+     "p": "sweet potato gold each",
+     "q": 2
+    }
+   ]
+  },
+  {
+   "id": "bulgogi",
+   "name": "Korean beef bulgogi bowls",
+   "weight": "light",
+   "mins": 25,
+   "serves": 4,
+   "prep": "15 min",
+   "cook": "10 min",
+   "total": "25 min",
+   "amounts": [
+    "500g lean beef strips",
+    "2 tbsp ssamjang",
+    "3 tbsp soy sauce",
+    "1 tbsp brown sugar",
+    "1 tbsp sesame oil",
+    "2 tsp garlic paste",
+    "4 microwave rice cups (2 × 2-packs)",
+    "200g coleslaw mix",
+    "1 bunch spring onions"
+   ],
+   "optional": [],
+   "method": [
+    "Mix soy, sugar, sesame oil, garlic and 1 tbsp ssamjang; marinate beef 10 min.",
+    "Stir-fry beef in a very hot pan in batches, 1–2 min each.",
+    "Toss coleslaw with a splash of soy and sesame oil.",
+    "Serve beef over rice with slaw, sliced spring onion and extra ssamjang."
+   ],
+   "extras": [
+    "soy sauce",
+    "sesame oil",
+    "brown sugar"
+   ],
+   "shares": [
+    "Duck fried rice",
+    "Beef & veg stir-fry"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Beef stir-fry strips",
+     "fb": "Woolworths lean beef strips 500g"
+    },
+    {
+     "g": "Microwave rice",
+     "q": 2,
+     "fb": "Sunrice microwave white long grain rice cup 125g x 2 pack"
+    },
+    {
+     "g": "Coleslaw mix",
+     "fb": "Woolworths classic shredded coleslaw 200g"
+    },
+    {
+     "p": "Wow spring onion bunch each"
+    },
+    {
+     "p": "O'food mild ssamjang 170g"
+    }
+   ]
+  },
+  {
+   "id": "nasi-goreng",
+   "name": "Nasi goreng with fried egg",
+   "weight": "medium",
+   "mins": 20,
+   "serves": 4,
+   "prep": "10 min",
+   "cook": "15 min",
+   "total": "25 min",
+   "amounts": [
+    "6 microwave rice cups (3 × 2-packs), cold if possible",
+    "300g chicken breast, diced",
+    "400g stir-fry vegetables",
+    "3 tbsp kecap manis",
+    "1 tbsp chilli sauce",
+    "4 eggs"
+   ],
+   "optional": [],
+   "method": [
+    "Stir-fry chicken in a hot wok until cooked; add vegetables for 3 min.",
+    "Add rice, breaking it up, and fry 3–4 min.",
+    "Stir through kecap manis and chilli sauce.",
+    "Fry the eggs sunny-side up.",
+    "Serve rice topped with a fried egg each."
+   ],
+   "extras": [
+    "chilli sauce"
+   ],
+   "shares": [
+    "Duck fried rice",
+    "Chicken burrito bowls",
+    "Beef & veg stir-fry"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Microwave rice",
+     "q": 3,
+     "fb": "Sunrice microwave white long grain rice cup 125g x 2 pack"
+    },
+    {
+     "g": "Eggs",
+     "fb": "Good farmer 12 extra large free range eggs 700g"
+    },
+    {
+     "g": "Chicken breast",
+     "fb": "Woolworths rspca approved chicken breast fillet per 300g"
+    },
+    {
+     "p": "Woolworths cook stir fry mix traditional vegetables 400g"
+    },
+    {
+     "p": "Abc kecap manis sweet soy sauce 275ml"
+    }
+   ]
+  },
+  {
+   "id": "larb",
+   "name": "Pork larb lettuce cups",
+   "weight": "light",
+   "mins": 20,
+   "serves": 4,
+   "prep": "15 min",
+   "cook": "10 min",
+   "total": "25 min",
+   "amounts": [
+    "500g lean pork mince",
+    "1 bunch spring onions, sliced",
+    "1 bunch coriander",
+    "3 tbsp lime juice",
+    "2 tbsp fish sauce",
+    "1 tsp chilli flakes",
+    "1 iceberg lettuce, leaves separated"
+   ],
+   "optional": [],
+   "method": [
+    "Dry-fry mince in a hot pan, breaking up, until cooked and slightly crisp.",
+    "Off the heat, stir in lime juice, fish sauce and chilli.",
+    "Toss through spring onion and chopped coriander.",
+    "Spoon into lettuce cups to serve."
+   ],
+   "extras": [
+    "chilli flakes"
+   ],
+   "shares": [],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Pork mince",
+     "fb": "Woolworths lean pork mince 500g"
+    },
+    {
+     "p": "Wow spring onion bunch each"
+    },
+    {
+     "p": "Woolworths fresh herb coriander bunch each"
+    },
+    {
+     "p": "Woolworths lime juice bottle 250ml"
+    },
+    {
+     "p": "iceberg lettuce each"
+    },
+    {
+     "p": "Chang's fish sauce 250ml"
+    }
+   ]
+  },
+  {
+   "id": "shakshuka",
+   "name": "Shakshuka with chorizo & fetta",
+   "weight": "light",
+   "mins": 30,
+   "serves": 4,
+   "prep": "10 min",
+   "cook": "25 min",
+   "total": "35 min",
+   "amounts": [
+    "6 eggs",
+    "700g passata",
+    "2 red capsicums, sliced",
+    "250g chorizo, sliced",
+    "100g crumbled fetta",
+    "1 tsp cumin",
+    "1 tsp paprika",
+    "1 sourdough loaf, to serve"
+   ],
+   "optional": [],
+   "method": [
+    "Fry chorizo in a deep pan until crisp; remove.",
+    "Soften capsicum in the chorizo oil, 5 min. Add cumin and paprika.",
+    "Add passata and chorizo; simmer 10 min.",
+    "Make 6 wells and crack in the eggs. Cover and cook 6–8 min until whites set.",
+    "Scatter fetta and serve with toasted sourdough."
+   ],
+   "extras": [
+    "cumin",
+    "paprika"
+   ],
+   "shares": [
+    "Huevos rancheros",
+    "Gnocchi & chorizo traybake",
+    "Zucchini, spinach & fetta frittata"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Eggs",
+     "fb": "Good farmer 12 extra large free range eggs 700g"
+    },
+    {
+     "g": "Passata",
+     "fb": "Val verde passata sauce 700g"
+    },
+    {
+     "g": "Capsicum",
+     "fb": "Red capsicum each"
+    },
+    {
+     "g": "Chorizo",
+     "fb": "Montecatini authentic spanish style chorizo 250g"
+    },
+    {
+     "p": "South cape crumbled fetta 200g"
+    },
+    {
+     "p": "Helga's sourdough loaf 650g"
+    }
+   ]
+  },
+  {
+   "id": "pastitsio",
+   "name": "Greek pastitsio",
+   "weight": "hearty",
+   "mins": 75,
+   "serves": 6,
+   "prep": "20 min",
+   "cook": "55 min",
+   "total": "1 hr 15 min",
+   "amounts": [
+    "500g beef mince",
+    "800g canned tomatoes (2 tins)",
+    "500g penne",
+    "1 cup frozen diced onions",
+    "1 tsp cinnamon",
+    "3 tbsp butter",
+    "3 tbsp plain flour",
+    "2½ cups milk",
+    "1½ cups grated 4-cheese melt"
+   ],
+   "optional": [],
+   "method": [
+    "Heat oven to 180°C. Cook pasta 2 min less than packet time; drain.",
+    "Brown onion and mince, add tomatoes and cinnamon; simmer 15 min.",
+    "Béchamel: melt butter, stir in flour 1 min, whisk in milk until thick. Stir in half the cheese.",
+    "Layer half the pasta, all the meat, the rest of the pasta, then the béchamel. Top with remaining cheese.",
+    "Bake 35 min until golden. Rest 10 min before cutting."
+   ],
+   "extras": [
+    "cinnamon",
+    "plain flour",
+    "butter"
+   ],
+   "shares": [
+    "Bolognese pasta bake",
+    "Cottage pie",
+    "Mexican stuffed capsicums"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Beef mince",
+     "fb": "Woolworths heart smart extra lean beef mince 500g"
+    },
+    {
+     "g": "Canned tomatoes",
+     "q": 2,
+     "fb": "La gina diced tomatoes 400g"
+    },
+    {
+     "g": "Dried pasta",
+     "fb": "Barilla pasta penne rigate 500g"
+    },
+    {
+     "p": "Perfect italiano grated 4 cheese melt 450g"
+    },
+    {
+     "p": "Harvey fresh light milk 3l"
+    },
+    {
+     "g": "Frozen diced onions",
+     "fb": "Woolworths prep set go diced frozen onions 500g"
+    }
+   ]
+  },
+  {
+   "id": "risoni",
+   "name": "Chorizo & spinach risoni",
+   "weight": "medium",
+   "mins": 25,
+   "serves": 4,
+   "prep": "5 min",
+   "cook": "20 min",
+   "total": "25 min",
+   "amounts": [
+    "375g risoni",
+    "250g chorizo, diced",
+    "1L chicken stock",
+    "120g baby spinach",
+    "½ cup grated parmesan",
+    "2 tsp garlic paste"
+   ],
+   "optional": [],
+   "method": [
+    "Fry chorizo until crisp, add garlic for 30 sec.",
+    "Add risoni and stir to coat.",
+    "Add stock a cup at a time, stirring, until absorbed and tender (about 12 min).",
+    "Stir through spinach until wilted, then parmesan. Season."
+   ],
+   "extras": [
+    "garlic"
+   ],
+   "shares": [],
+   "source": "starter",
+   "ing": [
+    {
+     "p": "Barilla pasta risoni 500g"
+    },
+    {
+     "g": "Chorizo",
+     "fb": "Montecatini authentic spanish style chorizo 250g"
+    },
+    {
+     "g": "Chicken stock",
+     "fb": "Campbell's real stock chicken 1l"
+    },
+    {
+     "g": "Baby spinach leaves",
+     "fb": "Woolworths baby leaf spinach 60g"
+    },
+    {
+     "g": "Parmesan",
+     "fb": "Perfect italiano parmesan cheese grated extra sharp 125g"
+    }
+   ]
+  },
+  {
+   "id": "gnocchi-traybake",
+   "name": "Gnocchi & chorizo traybake",
+   "weight": "medium",
+   "mins": 35,
+   "serves": 4,
+   "prep": "10 min",
+   "cook": "30 min",
+   "total": "40 min",
+   "amounts": [
+    "500g Rana potato gnocchi",
+    "500g cherry tomatoes",
+    "1 red capsicum, in chunks",
+    "1 zucchini, in chunks",
+    "250g chorizo, sliced",
+    "2 tbsp olive oil",
+    "1 handful fresh basil"
+   ],
+   "optional": [],
+   "method": [
+    "Heat oven to 220°C.",
+    "Toss everything except basil on a large lined tray with oil and seasoning.",
+    "Roast 25–30 min, tossing halfway, until gnocchi are golden and tomatoes burst.",
+    "Scatter basil to serve."
+   ],
+   "extras": [
+    "olive oil",
+    "basil"
+   ],
+   "shares": [
+    "Greek chicken traybake",
+    "Shakshuka with chorizo & fetta",
+    "Chicken burrito bowls"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "p": "Rana classic potato gnocchi 500g"
+    },
+    {
+     "g": "Snacking tomatoes",
+     "q": 2,
+     "fb": "Woolworths cherry tomatoes punnet 250g"
+    },
+    {
+     "g": "Capsicum",
+     "fb": "Red capsicum each"
+    },
+    {
+     "p": "zucchini green each"
+    },
+    {
+     "g": "Chorizo",
+     "fb": "Montecatini authentic spanish style chorizo 250g"
+    }
+   ]
+  },
+  {
+   "id": "tortilla-soup",
+   "name": "Chicken tortilla soup",
+   "weight": "medium",
+   "mins": 35,
+   "serves": 4,
+   "prep": "10 min",
+   "cook": "30 min",
+   "total": "40 min",
+   "amounts": [
+    "500g chicken breast",
+    "2L chicken stock",
+    "400g diced tomatoes",
+    "400g black beans, drained",
+    "125g corn kernels",
+    "2 tsp cumin",
+    "1 avocado, diced",
+    "130g sour cream",
+    "1 cup corn chips, crushed, to serve"
+   ],
+   "optional": [],
+   "method": [
+    "Bring stock, tomatoes and cumin to a simmer. Add chicken and poach 15 min.",
+    "Remove chicken, shred with two forks and return to the pot.",
+    "Add beans and corn; simmer 5 min. Season.",
+    "Serve topped with avocado, sour cream and crushed corn chips."
+   ],
+   "extras": [
+    "corn chips",
+    "cumin"
+   ],
+   "shares": [
+    "Chicken burrito bowls",
+    "Chicken laksa",
+    "Huevos rancheros"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Chicken breast",
+     "fb": "Woolworths rspca approved chicken breast fillet per 300g"
+    },
+    {
+     "g": "Chicken stock",
+     "q": 2,
+     "fb": "Campbell's real stock chicken 1l"
+    },
+    {
+     "g": "Canned tomatoes",
+     "fb": "La gina diced tomatoes 400g"
+    },
+    {
+     "g": "Black beans",
+     "fb": "Edgell black beans plant protein 400g"
+    },
+    {
+     "g": "Avocados",
+     "fb": "hass avocado each"
+    },
+    {
+     "g": "Sour cream",
+     "fb": "Dairy farmers sour cream squeeze pouch 130g"
+    },
+    {
+     "p": "Edgell australian grown corn kernels 125g x 4 pack"
+    }
+   ]
+  },
+  {
+   "id": "huevos",
+   "name": "Huevos rancheros",
+   "weight": "light",
+   "mins": 20,
+   "serves": 4,
+   "prep": "5 min",
+   "cook": "15 min",
+   "total": "20 min",
+   "amounts": [
+    "8 eggs",
+    "400g black beans, drained",
+    "350g passata",
+    "1 tsp chilli flakes",
+    "8 tortillas",
+    "1 avocado"
+   ],
+   "optional": [],
+   "method": [
+    "Simmer passata with chilli for 5 min to make a quick salsa.",
+    "Warm beans with a pinch of salt; lightly mash.",
+    "Fry the eggs.",
+    "Warm tortillas. Top with beans, eggs, salsa and sliced avocado."
+   ],
+   "extras": [
+    "chilli"
+   ],
+   "shares": [
+    "Chicken tortilla soup",
+    "Shakshuka with chorizo & fetta",
+    "Chicken burrito bowls"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Eggs",
+     "fb": "Good farmer 12 extra large free range eggs 700g"
+    },
+    {
+     "g": "Black beans",
+     "fb": "Edgell black beans plant protein 400g"
+    },
+    {
+     "g": "Passata",
+     "fb": "Val verde passata sauce 700g"
+    },
+    {
+     "p": "Old el paso family tortilla fajita wraps 16 pack"
+    },
+    {
+     "g": "Avocados",
+     "fb": "hass avocado each"
+    }
+   ]
+  },
+  {
+   "id": "stuffed-capsicum",
+   "name": "Mexican stuffed capsicums",
+   "weight": "medium",
+   "mins": 45,
+   "serves": 4,
+   "prep": "15 min",
+   "cook": "35 min",
+   "total": "50 min",
+   "amounts": [
+    "4 red capsicums, halved and seeded",
+    "500g beef mince",
+    "1 sachet Mingle taco spice mix (from the pantry)",
+    "250g Woolworths Mexican-style rice",
+    "400g black beans, drained",
+    "1 cup grated 4-cheese melt"
+   ],
+   "optional": [
+    "125g corn kernels",
+    "1 zucchini, diced",
+    "60g baby spinach, for a side salad"
+   ],
+   "method": [
+    "Heat oven to 190°C. Put capsicum halves cut-side up in a baking dish.",
+    "Brown mince, add taco mix and ¼ cup water; simmer 3 min.",
+    "Stir in heated rice and beans (plus corn and zucchini, if using).",
+    "Fill capsicums, top with cheese and cover with foil.",
+    "Bake 25 min, uncover and bake 10 min more until golden."
+   ],
+   "extras": [
+    "Mingle taco spice mix (you have it)"
+   ],
+   "shares": [
+    "Greek pastitsio",
+    "Cottage pie",
+    "Chicken burrito bowls"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Capsicum",
+     "q": 4,
+     "fb": "Red capsicum each"
+    },
+    {
+     "g": "Beef mince",
+     "fb": "Woolworths heart smart extra lean beef mince 500g"
+    },
+    {
+     "p": "Woolworths mexican style rice 250g"
+    },
+    {
+     "p": "Perfect italiano grated 4 cheese melt 450g"
+    },
+    {
+     "g": "Black beans",
+     "fb": "Edgell black beans plant protein 400g"
+    },
+    {
+     "p": "Edgell australian grown corn kernels 125g x 4 pack",
+     "opt": true,
+     "note": "stir through the filling"
+    },
+    {
+     "opt": true,
+     "note": "dice into the filling",
+     "p": "zucchini green each"
+    },
+    {
+     "g": "Baby spinach leaves",
+     "opt": true,
+     "note": "side salad",
+     "fb": "Woolworths baby leaf spinach 60g"
+    }
+   ]
+  },
+  {
+   "id": "laksa",
+   "name": "Chicken laksa",
+   "weight": "medium",
+   "mins": 30,
+   "serves": 4,
+   "prep": "10 min",
+   "cook": "20 min",
+   "total": "30 min",
+   "amounts": [
+    "500g chicken breast, sliced",
+    "3 tbsp Thai red curry paste",
+    "800ml coconut cream (2 cans)",
+    "1L chicken stock",
+    "250g rice vermicelli",
+    "250g bean sprouts",
+    "2 buk choy",
+    "1 lime",
+    "1 tbsp fish sauce"
+   ],
+   "optional": [],
+   "method": [
+    "Fry curry paste 1 min, add coconut cream and stock; simmer 5 min.",
+    "Add chicken and simmer 8 min until cooked. Add buk choy for the last 2 min.",
+    "Soak vermicelli in boiling water 5 min; drain.",
+    "Season broth with fish sauce and lime.",
+    "Divide noodles into bowls, ladle over laksa, top with bean sprouts."
+   ],
+   "extras": [
+    "lime",
+    "fish sauce"
+   ],
+   "shares": [
+    "Thai red chicken curry",
+    "Thai red pumpkin soup",
+    "Chicken tortilla soup"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Chicken breast",
+     "fb": "Woolworths rspca approved chicken breast fillet per 300g"
+    },
+    {
+     "g": "Coconut cream",
+     "q": 2,
+     "fb": "Tcc coconut cream 400ml"
+    },
+    {
+     "p": "Ayam paste thai red curry 195g"
+    },
+    {
+     "g": "Chicken stock",
+     "fb": "Campbell's real stock chicken 1l"
+    },
+    {
+     "p": "Chang's rice vermicelli 250g"
+    },
+    {
+     "p": "Aussie sprouts bean 250g"
+    },
+    {
+     "p": "buk choy asian greens each"
+    }
+   ]
+  },
+  {
+   "id": "pumpkin-soup",
+   "name": "Thai red pumpkin soup",
+   "weight": "medium",
+   "mins": 40,
+   "serves": 4,
+   "prep": "15 min",
+   "cook": "30 min",
+   "total": "45 min",
+   "amounts": [
+    "1 butternut pumpkin (about 1.5kg), peeled and chopped",
+    "2 tbsp Thai red curry paste",
+    "400ml coconut cream",
+    "750ml chicken stock",
+    "1 pack mini naans (5), to serve"
+   ],
+   "optional": [],
+   "method": [
+    "Fry curry paste 1 min in a large pot.",
+    "Add pumpkin and stock; simmer 20 min until soft.",
+    "Add most of the coconut cream and blend until smooth.",
+    "Serve swirled with the remaining coconut cream and warm naan."
+   ],
+   "extras": [],
+   "shares": [
+    "Chicken laksa",
+    "Thai red chicken curry"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "p": "fresh butternut pumpkin whole each"
+    },
+    {
+     "p": "Ayam paste thai red curry 195g"
+    },
+    {
+     "g": "Coconut cream",
+     "fb": "Tcc coconut cream 400ml"
+    },
+    {
+     "g": "Chicken stock",
+     "fb": "Campbell's real stock chicken 1l"
+    },
+    {
+     "p": "Simson's pantry mini naans plain 5 pack"
+    }
+   ]
+  },
+  {
+   "id": "keema",
+   "name": "Keema curry with roti",
+   "weight": "hearty",
+   "mins": 35,
+   "serves": 4,
+   "prep": "10 min",
+   "cook": "25 min",
+   "total": "35 min",
+   "amounts": [
+    "500g beef mince",
+    "1 cup frozen diced onions",
+    "2 tsp garlic paste",
+    "1 jar Patak's korma curry simmer sauce (450g)",
+    "1 cup frozen peas",
+    "1 tsp garam masala",
+    "4 roti"
+   ],
+   "optional": [],
+   "method": [
+    "Soften onion and garlic, add mince and brown well.",
+    "Stir in the simmer sauce and garam masala; simmer 15 min.",
+    "Add peas for the last 5 min.",
+    "Serve with warmed roti."
+   ],
+   "extras": [
+    "garam masala"
+   ],
+   "shares": [
+    "Bolognese pasta bake",
+    "Greek pastitsio",
+    "Cottage pie"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Beef mince",
+     "fb": "Woolworths heart smart extra lean beef mince 500g"
+    },
+    {
+     "g": "Frozen diced onions",
+     "fb": "Woolworths prep set go diced frozen onions 500g"
+    },
+    {
+     "g": "Garlic paste",
+     "fb": "Gourmet garden cold blend pastes garlic value 120g"
+    },
+    {
+     "p": "Patak's tandoori curry simmer sauce 450g"
+    },
+    {
+     "p": "Birds eye garden peas 1kg"
+    },
+    {
+     "p": "Supreme foods roti bread canai 500g x 4 pack"
+    }
+   ]
+  },
+  {
+   "id": "cottage-pie",
+   "name": "Cottage pie",
+   "weight": "hearty",
+   "mins": 60,
+   "serves": 6,
+   "prep": "15 min",
+   "cook": "45 min",
+   "total": "1 hr",
+   "amounts": [
+    "500g beef mince",
+    "1 cup frozen diced onions",
+    "2 carrots, diced",
+    "2 tbsp tomato paste",
+    "1 tbsp worcestershire sauce",
+    "1 cup beef stock",
+    "800g Birds Eye frozen mashed potato (microwave)",
+    "1 cup grated 4-cheese melt"
+   ],
+   "optional": [
+    "1 celery heart, diced",
+    "1 cup frozen peas",
+    "200g mushrooms, sliced"
+   ],
+   "method": [
+    "Heat oven to 200°C.",
+    "Microwave the Birds Eye mash as per packet (about 8–10 min on high, stirring halfway) while you make the filling.",
+    "Soften onion and carrot (plus celery, if using), 5 min. Add mince (plus mushrooms, if using) and brown.",
+    "Stir in tomato paste, worcestershire and stock; simmer 15 min until thick. Stir in peas, if using.",
+    "Tip into a baking dish, spread the hot mash over the top, rough it up with a fork and scatter with cheese.",
+    "Bake 20 min until golden."
+   ],
+   "extras": [
+    "worcestershire sauce",
+    "tomato paste"
+   ],
+   "shares": [
+    "Slow-cooked beef with mash",
+    "Greek pastitsio",
+    "Bolognese pasta bake"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Beef mince",
+     "fb": "Woolworths heart smart extra lean beef mince 500g"
+    },
+    {
+     "g": "Beef stock",
+     "fb": "Campbell's real stock beef 1l"
+    },
+    {
+     "p": "Woolworths australian grown carrots 1kg"
+    },
+    {
+     "p": "Birds eye mashed potato 800g"
+    },
+    {
+     "p": "Perfect italiano grated 4 cheese melt 450g"
+    },
+    {
+     "g": "Frozen diced onions",
+     "fb": "Woolworths prep set go diced frozen onions 500g"
+    },
+    {
+     "p": "Birds eye garden peas 1kg",
+     "opt": true,
+     "note": "into the mince"
+    },
+    {
+     "p": "Woolworths celery heart each",
+     "opt": true,
+     "note": "dice with the carrot"
+    },
+    {
+     "g": "Mushrooms",
+     "opt": true,
+     "note": "sliced, into the mince",
+     "fb": "mushrooms flat large loose per 350g"
+    }
+   ]
+  },
+  {
+   "id": "ragu",
+   "name": "Beef ragù pappardelle",
+   "weight": "hearty",
+   "mins": 180,
+   "serves": 4,
+   "prep": "15 min",
+   "cook": "3 hr",
+   "total": "3 hr 15 min",
+   "amounts": [
+    "700g gravy beef",
+    "700g passata",
+    "500ml beef stock",
+    "½ cup red wine",
+    "2 sprigs rosemary",
+    "375g Guzzi's pappardelle",
+    "½ cup grated parmesan, to serve"
+   ],
+   "optional": [],
+   "method": [
+    "Brown beef well in a heavy pot.",
+    "Add wine and bubble 1 min, then passata, stock and rosemary.",
+    "Cover and simmer on low (or 160°C oven) 2½–3 hr until tender.",
+    "Shred beef in the sauce with two forks.",
+    "Cook pappardelle, toss with ragù and serve with parmesan."
+   ],
+   "extras": [
+    "red wine",
+    "rosemary"
+   ],
+   "shares": [
+    "Beef meatballs with pappardelle",
+    "Slow-cooked beef with mash"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Slow-cook beef",
+     "fb": "Woolworths gravy beef slow cook 400g - 750g"
+    },
+    {
+     "g": "Passata",
+     "fb": "Val verde passata sauce 700g"
+    },
+    {
+     "g": "Beef stock",
+     "fb": "Campbell's real stock beef 1l"
+    },
+    {
+     "p": "Guzzi's pappardelle 375g"
+    },
+    {
+     "g": "Parmesan",
+     "fb": "Perfect italiano parmesan cheese grated extra sharp 125g"
+    }
+   ]
+  },
+  {
+   "id": "duck-fried-rice",
+   "name": "Duck fried rice",
+   "weight": "medium",
+   "mins": 20,
+   "serves": 4,
+   "prep": "10 min",
+   "cook": "15 min",
+   "total": "25 min",
+   "amounts": [
+    "2 confit duck legs, meat shredded",
+    "6 microwave rice cups (3 × 2-packs)",
+    "3 eggs, beaten",
+    "400g stir-fry vegetables",
+    "1 bunch spring onions",
+    "3 tbsp soy sauce"
+   ],
+   "optional": [],
+   "method": [
+    "Crisp shredded duck in a hot wok; remove.",
+    "Scramble eggs in the wok; remove.",
+    "Stir-fry vegetables 3 min, add rice and fry 3 min.",
+    "Return duck and egg, add soy and spring onion; toss well and serve."
+   ],
+   "extras": [
+    "soy sauce"
+   ],
+   "shares": [
+    "Nasi goreng with fried egg",
+    "Korean beef bulgogi bowls",
+    "Beef & veg stir-fry"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "p": "Luv-a-duck confit duck legs slow cooked 450g"
+    },
+    {
+     "g": "Microwave rice",
+     "q": 3,
+     "fb": "Sunrice microwave white long grain rice cup 125g x 2 pack"
+    },
+    {
+     "g": "Eggs",
+     "fb": "Good farmer 12 extra large free range eggs 700g"
+    },
+    {
+     "p": "Wow spring onion bunch each"
+    },
+    {
+     "p": "Woolworths cook stir fry mix traditional vegetables 400g"
+    }
+   ]
+  },
+  {
+   "id": "souvlaki",
+   "name": "Chicken souvlaki wraps",
+   "weight": "light",
+   "mins": 25,
+   "serves": 4,
+   "prep": "20 min",
+   "cook": "10 min",
+   "total": "30 min",
+   "amounts": [
+    "500g chicken breast, in strips",
+    "1 lemon",
+    "1 tsp dried oregano",
+    "2 tsp garlic paste",
+    "7 wraps",
+    "100g crumbled fetta",
+    "250g cherry tomatoes",
+    "1 continental cucumber",
+    "½ cup Greek yoghurt"
+   ],
+   "optional": [],
+   "method": [
+    "Toss chicken with lemon juice, oregano, garlic and oil.",
+    "Tzatziki: mix ½ cup yoghurt with grated cucumber, lemon and salt.",
+    "Pan-fry or grill chicken 3–4 min each side.",
+    "Fill warm wraps with chicken, tomato, cucumber, fetta and tzatziki."
+   ],
+   "extras": [
+    "lemon",
+    "dried oregano"
+   ],
+   "shares": [
+    "Chicken burrito bowls"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Chicken breast",
+     "fb": "Woolworths rspca approved chicken breast fillet per 300g"
+    },
+    {
+     "p": "Helga's sourdough wraps 7 pack"
+    },
+    {
+     "p": "South cape crumbled fetta 200g"
+    },
+    {
+     "g": "Snacking tomatoes",
+     "fb": "Woolworths cherry tomatoes punnet 250g"
+    },
+    {
+     "g": "Yoghurt",
+     "fb": "Jalna pot set sweet & creamy greek style yoghurt 480g"
+    },
+    {
+     "p": "continental cucumber each"
+    }
+   ]
+  },
+  {
+   "id": "frittata",
+   "name": "Zucchini, spinach & fetta frittata",
+   "weight": "light",
+   "mins": 30,
+   "serves": 4,
+   "prep": "10 min",
+   "cook": "25 min",
+   "total": "35 min",
+   "amounts": [
+    "8 eggs",
+    "2 zucchini, grated and squeezed",
+    "60g baby spinach",
+    "100g crumbled fetta",
+    "100g shaved ham, torn"
+   ],
+   "optional": [],
+   "method": [
+    "Heat oven grill to high.",
+    "Soften zucchini in an ovenproof pan, 3 min; wilt spinach.",
+    "Scatter ham, pour over beaten, seasoned eggs and dot with fetta.",
+    "Cook on low 10 min until almost set.",
+    "Finish under the grill 3–5 min until golden."
+   ],
+   "extras": [],
+   "shares": [
+    "Shakshuka with chorizo & fetta"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Eggs",
+     "fb": "Good farmer 12 extra large free range eggs 700g"
+    },
+    {
+     "q": 2,
+     "p": "zucchini green each"
+    },
+    {
+     "g": "Baby spinach leaves",
+     "fb": "Woolworths baby leaf spinach 60g"
+    },
+    {
+     "p": "South cape crumbled fetta 200g"
+    },
+    {
+     "p": "Don leg ham shaved 200g"
+    }
+   ]
+  },
+  {
+   "id": "parmigiana",
+   "name": "Chicken parmigiana & chips",
+   "weight": "hearty",
+   "mins": 40,
+   "serves": 4,
+   "prep": "20 min",
+   "cook": "25 min",
+   "total": "45 min",
+   "amounts": [
+    "2 large chicken breasts, halved horizontally",
+    "½ cup plain flour",
+    "2 eggs",
+    "1½ cups breadcrumbs",
+    "1 cup passata",
+    "100g shaved ham",
+    "1½ cups grated 4-cheese melt",
+    "750g frozen chips"
+   ],
+   "optional": [],
+   "method": [
+    "Heat oven to 220°C and cook chips as per packet.",
+    "Crumb chicken: flour, beaten egg, breadcrumbs.",
+    "Shallow-fry 3 min each side until golden; place on a tray.",
+    "Top with passata, ham and cheese; bake 10–12 min until cooked through and bubbling.",
+    "Serve with chips."
+   ],
+   "extras": [
+    "breadcrumbs",
+    "plain flour"
+   ],
+   "shares": [
+    "Bolognese pasta bake"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Chicken breast",
+     "fb": "Woolworths rspca approved chicken breast fillet per 300g"
+    },
+    {
+     "g": "Passata",
+     "fb": "Val verde passata sauce 700g"
+    },
+    {
+     "p": "Don leg ham shaved 200g"
+    },
+    {
+     "p": "Perfect italiano grated 4 cheese melt 450g"
+    },
+    {
+     "g": "Frozen chips",
+     "fb": "Mccain pub style extra crispy chips 750g"
+    }
+   ]
+  },
+  {
+   "id": "duck-cherry",
+   "name": "Duck breast with cherry sauce",
+   "weight": "medium",
+   "mins": 30,
+   "serves": 2,
+   "prep": "5 min",
+   "cook": "25 min",
+   "total": "30 min",
+   "amounts": [
+    "380g duck breast fillets",
+    "1 cup morello cherries plus ¼ cup syrup",
+    "1 tbsp balsamic vinegar",
+    "800g Birds Eye frozen mashed potato (microwave)",
+    "1 bunch broccolini"
+   ],
+   "optional": [],
+   "method": [
+    "Score duck skin, season, and place skin-side down in a cold pan. Cook on medium 8–10 min until crisp; flip for 3 min. Rest.",
+    "Pour off most fat, add cherries, syrup and balsamic; bubble 3–4 min to a glaze.",
+    "Microwave the Birds Eye mash as per packet (about 8–10 min on high, stirring halfway) and steam broccolini.",
+    "Slice duck and serve with mash, greens and cherry sauce."
+   ],
+   "extras": [
+    "balsamic vinegar"
+   ],
+   "shares": [
+    "Confit duck legs with mash & greens"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "p": "Luv-a-duck fresh duck breast fillets 380g"
+    },
+    {
+     "p": "Birds eye mashed potato 800g"
+    },
+    {
+     "p": "Woolworths broccolini bunch each"
+    },
+    {
+     "p": "Morello cherries pitted in syrup 680g"
+    }
+   ]
+  },
+  {
+   "id": "caesar",
+   "name": "Chicken & bacon caesar salad",
+   "weight": "light",
+   "mins": 20,
+   "serves": 4,
+   "prep": "15 min",
+   "cook": "10 min",
+   "total": "25 min",
+   "amounts": [
+    "500g chicken breast",
+    "200g bacon",
+    "2 cos lettuces",
+    "½ cup shaved or grated parmesan",
+    "½ cup caesar dressing",
+    "1 cup croutons"
+   ],
+   "optional": [],
+   "method": [
+    "Pan-fry chicken 5–6 min each side; rest and slice.",
+    "Fry bacon until crisp; break into pieces.",
+    "Toss lettuce with dressing, croutons and most of the parmesan.",
+    "Top with chicken, bacon and remaining parmesan."
+   ],
+   "extras": [
+    "croutons"
+   ],
+   "shares": [],
+   "source": "starter",
+   "ing": [
+    {
+     "g": "Chicken breast",
+     "fb": "Woolworths rspca approved chicken breast fillet per 300g"
+    },
+    {
+     "g": "Bacon / pancetta",
+     "fb": "Bertocchi traditional flat pancetta with black pepper 250g -"
+    },
+    {
+     "g": "Parmesan",
+     "fb": "Perfect italiano parmesan cheese grated extra sharp 125g"
+    },
+    {
+     "p": "cos lettuce each"
+    },
+    {
+     "p": "Praise caesar dressing 250ml"
+    }
+   ]
+  },
+  {
+   "id": "meatball-pappardelle",
+   "name": "Beef meatballs with pappardelle",
+   "weight": "hearty",
+   "mins": 35,
+   "serves": 4,
+   "prep": "5 min",
+   "cook": "25 min",
+   "total": "30 min",
+   "amounts": [
+    "420g Harvey Beef parsley & garlic meatballs (20)",
+    "700g Val Verde passata",
+    "2 tsp garlic paste",
+    "1 tsp dried oregano",
+    "375g Guzzi's pappardelle",
+    "½ cup grated parmesan"
+   ],
+   "optional": [
+    "60g baby spinach"
+   ],
+   "method": [
+    "Brown meatballs in a deep pan, 5 min, turning.",
+    "Add garlic for 30 sec, then passata and oregano.",
+    "Cover and simmer 15 min until meatballs are cooked through. Stir in spinach, if using.",
+    "Cook pappardelle as per packet; drain, keeping a little pasta water.",
+    "Toss pasta through the sauce, loosening with pasta water. Serve with parmesan."
+   ],
+   "extras": [
+    "garlic",
+    "dried oregano"
+   ],
+   "shares": [
+    "Beef ragù pappardelle"
+   ],
+   "source": "starter",
+   "ing": [
+    {
+     "p": "Harvey beef 20 pack parsley & garlic meatballs 420g"
+    },
+    {
+     "g": "Passata",
+     "fb": "Val verde passata sauce 700g"
+    },
+    {
+     "p": "Guzzi's pappardelle 375g"
+    },
+    {
+     "g": "Parmesan",
+     "fb": "Perfect italiano parmesan cheese grated extra sharp 125g"
+    },
+    {
+     "g": "Baby spinach leaves",
+     "opt": true,
+     "note": "wilt into the sauce",
+     "fb": "Woolworths baby leaf spinach 60g"
+    }
+   ]
+  }
+ ]
+}

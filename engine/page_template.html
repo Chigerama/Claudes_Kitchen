@@ -1,0 +1,1039 @@
+<title>Claude's Kitchen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F3F6F2; --panel:#FFFFFF; --ink:#18231D; --muted:#5B6A61; --faint:#DCE3DD; --grid:#E8EDE9;
+  --accent:#2E6B4E; --weekly:#2E6B4E; --fortnight:#6FA27A; --monthly:#C79A3B; --rare:#AEB8B1;
+  --due:#B5532F; --dueBg:#F7E6DE; --cell0:#EEF2EF;
+  --display:"Bricolage Grotesque",Georgia,serif; --body:"Instrument Sans",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark; --bg:#111814; --panel:#18221D; --ink:#E6EEE8; --muted:#97A69C; --faint:#2A3830; --grid:#223029;
+  --accent:#7CC39A; --weekly:#7CC39A; --fortnight:#4F8A63; --monthly:#D9B25E; --rare:#56645B; --due:#EE8D66; --dueBg:#3A2219; --cell0:#1E2A23;}}
+:root[data-theme="dark"]{
+  color-scheme:dark; --bg:#111814; --panel:#18221D; --ink:#E6EEE8; --muted:#97A69C; --faint:#2A3830; --grid:#223029;
+  --accent:#7CC39A; --weekly:#7CC39A; --fortnight:#4F8A63; --monthly:#D9B25E; --rare:#56645B; --due:#EE8D66; --dueBg:#3A2219; --cell0:#1E2A23;}
+.sched{display:grid;gap:6px}
+.srow{display:grid;grid-template-columns:5.5em 1fr auto;gap:10px;align-items:center;padding:8px 12px;border-radius:12px;background:var(--panel);border:1px solid var(--faint)}
+.srow.today{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.srow .d{font:500 13px var(--mono);color:var(--muted)}.srow.today .d{color:var(--accent)}
+.srow .pick{display:flex;gap:10px;align-items:center;min-width:0}.srow .pick a.rl{white-space:nowrap;font-size:13px;color:var(--accent);text-decoration:underline;cursor:pointer}
+.srow select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--faint);border-radius:8px;padding:5px 8px;min-width:0;width:100%}
+.cooks{display:flex;gap:4px}.cooks button{all:unset;cursor:pointer;font-size:12.5px;padding:3px 10px;border-radius:99px;border:1px solid var(--faint);color:var(--muted)}
+.cooks button.on{background:var(--accent);border-color:var(--accent);color:var(--panel)}
+.tonight{font:700 20px/1.25 var(--display);margin:0}.tonight small{display:block;font:500 13px var(--body);color:var(--muted)}
+@media (max-width:520px){.srow{grid-template-columns:1fr auto}.srow .pick{grid-column:1/-1;order:3}}
+.foot{border-top:1px solid var(--faint);padding-top:16px;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;font-size:12.5px;color:var(--muted)}
+.foot summary{cursor:pointer;color:var(--accent);font-weight:600}.foot details[open]{flex-basis:100%}.foot details p{max-width:75ch;margin:8px 0 0}
+section.coll>:not(h2):not(.weekhead){display:none}
+.colbtn{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:10px}.colbtn:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
+.colbtn::before{content:"";width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);transition:transform .15s;margin-top:-4px}
+section.coll .colbtn::before{transform:rotate(-45deg);margin-top:0}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--body);padding:0 16px}
+.wrap{max-width:1080px;margin:0 auto;padding-block:32px 64px;display:grid;gap:40px}
+header{display:grid;gap:10px}
+h1{font:700 clamp(34px,6vw,54px)/1 var(--display);letter-spacing:-.02em;margin:0}
+h2{font:700 24px/1.15 var(--display);margin:0;text-wrap:balance}
+.lede{color:var(--muted);max-width:62ch;margin:0}
+.stats{display:flex;flex-wrap:wrap;gap:8px 28px;font:500 13px var(--mono);color:var(--muted)}
+.stats b{color:var(--ink);font-weight:500;font-size:15px}
+section{display:grid;gap:14px}
+.sub{color:var(--muted);margin:0;max-width:70ch;font-size:14px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:11px;height:11px;border-radius:3px;display:inline-block}
+.panel{background:var(--panel);border:1px solid var(--faint);border-radius:10px;padding:18px}
+/* staples */
+.bars{display:grid;gap:5px}
+.bar{display:grid;grid-template-columns:minmax(120px,230px) 1fr 58px;gap:10px;align-items:center;font-size:13.5px}
+.bar .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track{height:14px;background:var(--grid);border-radius:3px;position:relative}
+.fill{position:absolute;inset:0 auto 0 0;border-radius:3px}
+.bar .v{font:12px var(--mono);color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+/* timeline */
+.scroll{overflow-x:auto}
+table.tl{border-collapse:separate;border-spacing:3px;font-size:12.5px}
+.tl th{font:400 10.5px var(--mono);color:var(--muted);text-align:center;vertical-align:bottom;padding:0 0 4px}
+.tl th.mo{text-align:left}
+.tl td.nm{white-space:nowrap;padding-right:8px;max-width:210px;overflow:hidden;text-overflow:ellipsis}
+.tl td.c{width:22px;height:18px;border-radius:3px;background:var(--cell0);text-align:center;font:10px var(--mono);color:var(--bg)}
+.tl td.st{padding-left:8px;white-space:nowrap}
+.chip{display:inline-block;font:500 11px var(--mono);padding:1px 7px;border-radius:99px;background:var(--grid);color:var(--muted)}
+.chip.due{background:var(--dueBg);color:var(--due)}
+/* price */
+.prices{display:grid;gap:7px}
+.pr{display:grid;grid-template-columns:minmax(120px,230px) 1fr 118px;gap:10px;align-items:center;font-size:13.5px}
+.pr .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ptrack{height:18px;position:relative;border-left:1px solid var(--faint);background:linear-gradient(90deg,transparent calc(50% - .5px),var(--grid) calc(50% - .5px),var(--grid) calc(50% + .5px),transparent calc(50% + .5px))}
+.prange{position:absolute;top:5px;height:8px;border-radius:4px;background:var(--monthly);opacity:.55}
+.pdot{position:absolute;top:3px;width:12px;height:12px;border-radius:50%;background:var(--ink);transform:translateX(-6px);border:2px solid var(--panel)}
+.pr .v{font:12px var(--mono);color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.pr .v b{color:var(--due);font-weight:500}
+.axis{display:grid;grid-template-columns:minmax(120px,230px) 1fr 118px;gap:10px;font:10.5px var(--mono);color:var(--muted)}
+.axis div:nth-child(2){display:flex;justify-content:space-between}
+/* table */
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+input[type=search],select{font:inherit;font-size:14px;padding:8px 10px;border-radius:8px;border:1px solid var(--faint);background:var(--panel);color:var(--ink)}
+input[type=search]{flex:1;min-width:0;max-width:340px}
+input:focus-visible,select:focus-visible,summary:focus-visible,th button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table.all{width:100%;border-collapse:collapse;font-size:13.5px}
+.all th{text-align:left;font:500 11px var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--faint);padding:6px 8px}
+.all th button{all:unset;cursor:pointer}
+.all td{padding:7px 8px;border-bottom:1px solid var(--grid);vertical-align:top}
+.all td.n{font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.all details summary{cursor:pointer}
+.all details ul{margin:6px 0 2px;padding-left:18px;color:var(--muted);font-size:12.5px}
+.all .cat{color:var(--muted);font-size:12.5px}
+.count{font:12px var(--mono);color:var(--muted)}
+.weekhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.chip.ok{background:var(--accent);color:var(--panel)}
+.wkgroup{display:grid;gap:2px}
+.wkgroup+.wkgroup{margin-top:14px}
+.wkgroup h3{font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.wl{display:grid;grid-template-columns:22px 1fr auto;gap:4px 12px;align-items:start;padding:8px 0;border-top:1px solid var(--grid)}
+.wl input[type=checkbox]{width:18px;height:18px;margin:2px 0 0;accent-color:var(--accent)}
+.wl .nm{font-weight:500}
+.wl .meta{display:flex;flex-wrap:wrap;gap:4px 6px;margin-top:3px}
+.wl .flag{font-size:12.5px;color:var(--due);margin-top:3px}
+.wl .rt{display:flex;align-items:center;gap:10px;font:12.5px var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.wl .was{text-decoration:line-through;color:var(--muted)}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--faint);border-radius:6px}
+.qty button{all:unset;cursor:pointer;width:22px;text-align:center;color:var(--muted)}
+.qty button:focus-visible{outline:2px solid var(--accent)}
+.qty span{min-width:18px;text-align:center}
+.chip.sp{background:var(--dueBg);color:var(--due)}
+.chip.core{background:var(--accent);color:var(--panel)}
+.notes{margin:14px 0 0;padding:10px 12px;background:var(--grid);border-radius:8px;font-size:13px;color:var(--muted);display:grid;gap:4px}
+.wkbar{position:sticky;bottom:0;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:var(--panel);border:1px solid var(--faint);border-radius:10px}
+.wktotal{font:500 14px var(--mono)}
+.btn{font:600 14px var(--body);padding:8px 14px;border-radius:8px;border:1px solid var(--faint);background:var(--panel);color:var(--ink);cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--panel)}
+.btn:disabled{opacity:.5;cursor:default}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.oflist{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.altsel{font:inherit;font-size:12.5px;margin-top:5px;max-width:100%;padding:4px 6px;border-radius:6px;border:1px solid var(--faint);background:var(--panel);color:var(--ink)}
+.oflist li{flex-wrap:wrap;display:inline-flex;align-items:center;gap:8px;padding:5px 6px 5px 12px;border-radius:99px;background:var(--panel);border:1px solid var(--faint);font-size:13.5px}
+#pnList{gap:5px}#pnList li{padding:1px 2px 1px 9px;font-size:12.5px;gap:2px;line-height:1.7}#pnList li.more{all:unset}#pnList .morebtn{all:unset;cursor:pointer;font-size:12.5px;color:var(--accent);font-weight:600;padding:1px 6px}
+.oflist button{all:unset;cursor:pointer;color:var(--muted);padding:0 6px;border-radius:99px}
+.oflist button:focus-visible{outline:2px solid var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--faint);border-radius:8px;overflow:hidden;flex-wrap:wrap}
+.seg button{all:unset;cursor:pointer;padding:7px 12px;font-size:13.5px;color:var(--muted)}
+.seg button.on{background:var(--accent);color:var(--panel)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.bklist{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px}
+.bkitem{display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:start;padding:12px 14px;background:var(--panel);border:1px solid var(--faint);border-radius:10px}
+.bkitem.sel{border-color:var(--accent)}
+.bkitem input{margin:3px 0 0;accent-color:var(--accent)}
+.bkopen{all:unset;cursor:pointer;display:grid;gap:5px}
+.bkopen img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px;max-width:100%}
+.bkopen:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.rdphoto img{width:100%;max-height:280px;object-fit:cover;border-radius:10px;display:block;margin-bottom:6px;max-width:100%}
+.help{font-size:13.5px;color:var(--muted);max-width:75ch}
+.help summary{cursor:pointer;color:var(--accent);font-weight:600}
+.help p{margin:8px 0}
+.bkitem b{font:700 15.5px/1.25 var(--display)}
+.linkbtn{all:unset;cursor:pointer;color:var(--accent);font-size:13px;font-weight:600}
+.oflist button.linkbtn{color:var(--accent);font-weight:600;padding:0 4px}
+.linkbtn:focus-visible{outline:2px solid var(--accent)}
+dialog{border:0;padding:0;border-radius:14px;background:var(--panel);color:var(--ink);width:min(760px,calc(100vw - 32px));max-height:calc(100dvh - 48px)}
+dialog::backdrop{background:rgba(10,20,14,.55)}
+.rd{padding:22px;display:grid;gap:14px}
+.rdhead{display:flex;justify-content:space-between;gap:12px;align-items:start}
+.rdhead h2{font-size:26px}
+.rdbody{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:24px}
+.rd h3{font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.rd ul,.rd ol{margin:0;padding-left:20px;display:grid;gap:6px}
+.rd ol li{padding-left:4px}
+@media (max-width:620px){.rdbody{grid-template-columns:1fr}}
+.srv{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-size:13.5px;padding:10px 14px;background:var(--panel);border:1px solid var(--faint);border-radius:10px}
+.srv label{font-weight:600}
+.okc{color:var(--accent)}.warnc{color:var(--due)}
+.fc{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.fc div{background:var(--panel);border:1px solid var(--faint);border-radius:8px;padding:8px 4px;text-align:center;display:grid;gap:2px}
+.fc b{font:500 11px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.fc .t{font:700 18px var(--display)}
+.fc .r{font:11px var(--mono);color:var(--muted)}
+.mlgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--faint);border-radius:10px;padding:14px;display:grid;gap:8px;align-content:start}
+.card.on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.card .top{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start}
+.card .top input{width:18px;height:18px;margin:3px 0 0;accent-color:var(--accent)}
+.card h3{font:700 17px/1.2 var(--display);margin:0}
+.card .why{font-size:12.5px;color:var(--muted)}
+.chip.hearty{background:#E9DCC4;color:#7A5418}.chip.medium{background:var(--grid);color:var(--muted)}.chip.light{background:#DCEBE0;color:#2E6B4E}
+.chip.new{background:var(--ink);color:var(--bg)}
+.card details summary{cursor:pointer;font-size:13px;color:var(--accent);font-weight:600}
+.ing{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:4px;font-size:13px}
+.ing label{display:grid;grid-template-columns:18px 1fr auto;gap:8px;align-items:start}
+.ing input{margin:2px 0 0;accent-color:var(--accent)}
+.ing .p{font:12px var(--mono);white-space:nowrap}
+.ing .p .s{color:var(--due)}
+.extras{font-size:12.5px;color:var(--muted)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .chip.hearty{background:#3A2E18;color:#E2C27A}:root:not([data-theme="light"]) .chip.light{background:#1E3326;color:#8FD1A8}}
+:root[data-theme="dark"] .chip.hearty{background:#3A2E18;color:#E2C27A}:root[data-theme="dark"] .chip.light{background:#1E3326;color:#8FD1A8}
+@media (max-width:560px){.fc{grid-template-columns:repeat(4,minmax(0,1fr))}.wl{grid-template-columns:22px 1fr}.wl .rt{grid-column:2}.bar,.pr,.axis{grid-template-columns:110px 1fr 50px}.pr,.axis{grid-template-columns:110px 1fr 84px}.all .hide{display:none}}
+
+.flow{background:var(--panel);border:1px solid var(--faint);border-radius:14px;padding:18px 18px 0;gap:16px}
+.flow [hidden]{display:none!important}
+.flowhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.steps button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:2px;width:100%;height:100%;padding:8px 10px;border-radius:10px;border:1px solid var(--faint);font:500 12.5px var(--body);color:var(--muted);background:var(--bg)}
+.steps button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.steps .n{font:700 17px/1 var(--display)}
+.steps li.done button{border-color:var(--accent);color:var(--accent)}
+.steps li.done .n::after{content:" ✓"}
+.steps li.cur button{background:var(--accent);border-color:var(--accent);color:var(--panel)}
+.flowstage h3{font:700 20px/1.2 var(--display);margin:0 0 4px}
+.flowstage p{margin:0}
+#flBody{display:grid;gap:22px}
+#flBody #week>.weekhead,#flBody #meals>.weekhead,#flBody #wksub,#flBody #meals>p.sub:first-of-type,#flBody #approve,#flBody #mlapprove{display:none}
+#flBody .wkbar{position:static}
+.flownav{position:sticky;bottom:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 -18px;padding:12px 18px calc(12px + env(safe-area-inset-bottom,0px));background:var(--panel);border-top:1px solid var(--faint);border-radius:0 0 14px 14px}
+.flownav .pos{font:500 12px var(--mono);color:var(--muted)}
+.flownav .btn{min-width:7.5em}
+.rv{display:grid;gap:10px}
+.rv details{border:1px solid var(--faint);border-radius:10px;padding:10px 14px;background:var(--bg)}
+.rv summary{cursor:pointer;font-weight:600;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.rv ul{margin:8px 0 0;padding-left:18px;font-size:14px}.rv li{display:flex;justify-content:space-between;gap:10px}
+.rv .edit{font-size:13px}
+.rvtotal{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;font:700 18px var(--display);padding-top:6px}
+.rvmsg{font-size:14px;margin:0}
+.rvact{display:flex;gap:8px;flex-wrap:wrap}
+.rvplaced{display:grid;gap:8px;padding:12px 14px;border:1px solid var(--accent);border-radius:10px;background:var(--bg)}
+.rvplaced b{font:700 16px var(--display)}
+.flow.locked .steps button{cursor:default;opacity:.6}
+@media (max-width:560px){.steps li:not(.cur) .lbl{display:none}.steps button{align-items:center;padding:8px 4px}.flownav .btn{min-width:0}}
+.linkbtn.nv{color:#9B1C1C;font-size:12px;font-weight:600;margin-left:4px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .linkbtn.nv{color:#F28B82}}:root[data-theme="dark"] .linkbtn.nv{color:#F28B82}.nvchip{display:inline-flex;gap:6px;align-items:center;font-size:12px}
+/* ---- notes for Claude ---- */
+.cn{background:var(--panel);border:1px solid var(--faint);border-radius:14px;padding:18px;gap:12px}
+.cnhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.cnlog{display:grid;gap:10px;align-content:start;height:280px;overflow-y:auto;scrollbar-gutter:stable;scrollbar-width:thin;scrollbar-color:var(--faint) transparent;padding:4px 8px 4px 2px;overscroll-behavior:contain}
+.cnlog::-webkit-scrollbar{width:8px}.cnlog::-webkit-scrollbar-thumb{background:var(--faint);border-radius:8px}
+@media (max-width:560px){.cnlog{height:360px}}
+.cnmsg{display:grid;gap:3px;max-width:88%;min-width:0}
+.cnmsg.us{justify-self:end}
+.cnmsg .who{font:500 11px var(--mono);letter-spacing:.04em;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
+.cnmsg.us .who{justify-content:flex-end}
+.cnmsg .txt{padding:9px 12px;border-radius:12px;font-size:14px;line-height:1.45;overflow-wrap:anywhere;white-space:pre-wrap}
+.cnmsg.us .txt{background:var(--grid);border-bottom-right-radius:4px}
+.cnmsg.helper .txt{background:var(--bg);border:1px solid var(--faint);border-bottom-left-radius:4px;font-style:italic}
+.cnmsg.helper .who{color:var(--accent)}
+.cnmsg .rlink{all:unset;cursor:pointer;color:var(--accent);text-decoration:underline;font-weight:600}
+.cnmsg .rlink:focus-visible{outline:2px solid var(--accent)}
+.cnempty{color:var(--muted);font-size:13.5px;font-style:italic;margin:0;padding:6px 0}
+.cncomp{display:grid;gap:8px}
+.cncomp textarea,.unote{font:16px/1.45 var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--faint);border-radius:10px;padding:9px 11px;width:100%;resize:vertical;min-height:62px}
+.cncomp textarea:focus-visible,.unote:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.cnrow{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between}
+.cnrow .seg button{padding:5px 11px;font-size:13px}
+.cnmore{justify-self:center}
+.unotewrap label{display:block;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.unote{font-size:15px;min-height:56px}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Claude's Kitchen</h1>
+    <p class="lede">Good day. Claude here, keeping the kitchen in order: what's for dinner, what's running low, and what's worth buying this week. Further down you'll find my records of everything you buy from Woolworths, how often, and what you've paid. I've taken the liberty of treating similar products as one (all chicken breast cuts, for instance).</p>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <section id="helper" class="cn" aria-labelledby="cnH">
+    <div class="cnhead"><h2 id="cnH">A word with Claude</h2><span class="chip" id="cnStatus">Loading…</span></div>
+    <p class="sub">Leave instructions here: a recipe to add to the book, a change to how I shop, a grievance about the bananas. I attend to notes each evening and reply below. Notes you leave on a recipe appear here too.</p>
+    <div class="cnlog" id="cnLog" aria-live="polite"><p class="cnempty">One moment, I'm fetching the correspondence.</p></div>
+    <form class="cncomp" id="cnForm">
+      <label for="cnText" class="sub" style="font-size:13px">Your note</label>
+      <textarea id="cnText" rows="3" maxlength="6000" placeholder="e.g. Please add this recipe: Lemon chicken traybake, serves 4…"></textarea>
+      <div class="cnrow">
+        <span class="seg" id="cnFrom" role="group" aria-label="Note from"></span>
+        <span style="display:flex;gap:10px;align-items:center"><span class="count" id="cnMsg" role="status"></span><button type="submit" class="btn primary" id="cnSend">Leave note</button></span>
+      </div>
+    </form>
+  </section>
+
+  <section id="flow" class="flow" aria-labelledby="flH">
+    <div class="flowhead"><h2 id="flH">This week's shop</h2><span class="chip" id="flStatus">Loading…</span></div>
+    <ol class="steps" id="flSteps">
+      <li><button type="button" data-st="0"><span class="n">1</span><span class="lbl">Specials</span></button></li>
+      <li><button type="button" data-st="1"><span class="n">2</span><span class="lbl">Core items</span></button></li>
+      <li><button type="button" data-st="2"><span class="n">3</span><span class="lbl">Meals</span></button></li>
+      <li><button type="button" data-st="3"><span class="n">4</span><span class="lbl">Extra items</span></button></li>
+      <li><button type="button" data-st="4"><span class="n">5</span><span class="lbl">Review &amp; send</span></button></li>
+    </ol>
+    <div class="flowstage"><h3 id="flTitle"></h3><p class="sub" id="flHelp"></p></div>
+    <div id="flBody"><div id="flReview" class="rv" hidden></div></div>
+    <div class="flownav"><button type="button" class="btn" id="flPrev">← Previous</button><span class="pos" id="flPos"></span><button type="button" class="btn primary" id="flNext">Next →</button></div>
+  </section>
+
+  <section id="plan">
+    <h2>This week's dinners</h2>
+    <p class="tonight" id="tonight"></p>
+    <div class="sched" id="sched"></div>
+    <p class="sub">Choose a dinner and a cook for each evening, and I'll keep the household informed. The choices come from this week's approved meals, and changes are noted for everyone at once.</p>
+  </section>
+
+  <section id="outof">
+    <h2>We're out of…</h2>
+    <p class="sub">Should anything run out, simply jot it down here in your own words. I'll match it to your usual product, or find the best Woolworths has to offer if it's something new, and put it on this week's order for your approval. Anything added before you confirm the shop goes in with it; for something new I pick the best match and tell you what I chose. I'll remember your choice for next time.</p>
+    <form id="ofForm" class="tools">
+      <input type="search" id="ofText" placeholder="e.g. garlic paste" aria-label="Item you're out of" autocomplete="off">
+      <button class="btn" type="submit">Add</button>
+    </form>
+    <ul id="ofList" class="oflist"></ul>
+  </section>
+
+  <section id="extra">
+    <h2>I have extra…</h2>
+    <p class="sub">A surplus in the cupboard? Tell me how many you have and I'll hold it back until you're down to about one usual purchase (a good special excepted), then return it to the list with roughly ten days' supply in hand. I'll forget the count once you've bought it again.</p>
+    <form id="exForm" class="tools">
+      <input type="number" id="exCount" min="1" max="99" value="2" aria-label="How many on hand" style="width:4.5em">
+      <input type="search" id="exText" placeholder="e.g. shampoo" aria-label="Item you have extra of" autocomplete="off">
+      <button class="btn" type="submit">Add</button>
+    </form>
+    <ul id="exList" class="oflist"></ul>
+  </section>
+
+  <section id="pantry">
+    <h2>In the pantry…</h2>
+    <p class="sub">The condiments, spices, oils, sauces and stocks you keep on hand. I'll favour recipes that make use of them, leave them off the shopping unless you say otherwise, and bear them in mind when proposing new dishes. Tap × when something runs out and I'll ask whether it should go on the next order.</p>
+    <form id="pnForm" class="tools">
+      <input type="search" id="pnText" placeholder="e.g. soy sauce, smoked paprika, olive oil" aria-label="Pantry item" autocomplete="off">
+      <button class="btn" type="submit">Add</button>
+    </form>
+    <ul id="pnList" class="oflist"></ul>
+  </section>
+
+  <section id="week">
+    <div class="weekhead">
+      <h2>This week's order</h2>
+      <span class="chip" id="wkstatus">Loading…</span>
+    </div>
+    <p class="sub" id="wksub">Every Friday morning I check the prices and set out what's due, what's on special, and anything from your out-of list. Tick what you'd like and press <b>Approve</b>. I'll place the approved items in your Woolworths cart at 11am Saturday, with a gentle reminder at 10am. Nothing goes in without your say-so, and checkout, naturally, remains yours. A change of heart? <b>Unapprove</b> any time before the cart run. Once things are in the cart, <b>Remove from cart</b> (on an item) or <b>Remove recipe from cart</b> (on a meal) asks me to take them out at the next run, or at once if you tell me. When removing a recipe I'll keep anything another meal or your staples still need.</p>
+    <div class="panel" id="wkpanel"><p class="sub" id="wkempty">Nothing to show just yet. I'll have this week's list ready on Friday morning.</p></div>
+    <div class="wkbar" id="wkbar" hidden>
+      <span id="wktotal" class="wktotal"></span>
+      <button id="approve" class="btn primary">Approve for cart</button>
+    </div>
+  </section>
+
+  <section id="meals">
+    <div class="weekhead">
+      <h2>Meals this week</h2>
+      <span class="chip" id="mlstatus">Loading…</span>
+    </div>
+    <p class="sub">Each Friday I select twelve dinners to suit the week's local weather, going by the evening temperatures (5–8pm): lighter fare when it's warm, something heartier when it's cool. Choose the ones you fancy, untick anything already in the cupboard, and press <b>Approve meals</b>. I'll add the ingredients to your cart at 11am Saturday, along with the staples.</p>
+    <div class="fc" id="fc"></div>
+    <div class="srv" id="srv" hidden>
+      <label for="mlPeople">People eating dinner</label>
+      <span class="qty"><button type="button" id="pplDown" aria-label="Fewer people">−</button><span id="mlPeople">2</span><button type="button" id="pplUp" aria-label="More people">+</button></span>
+      <span id="srvText"></span>
+    </div>
+    <div class="tools" id="mltools" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="btn" id="mlshuffle" type="button">Shuffle recipes</button><span class="count" id="mlshmsg">Swaps the unticked dinners for fresh ideas, favouring ones you haven't made yet.</span></div>
+    <div class="mlgrid" id="mlgrid"><p class="sub">No dinners to propose just yet. I'll have them for you on Friday.</p></div>
+    <div class="wkbar" id="mlbar" hidden>
+      <span id="mltotal" class="wktotal"></span>
+      <span style="display:flex;gap:8px;flex-wrap:wrap"><button id="mlexport" class="btn">Export this week to Paprika</button><button id="mlapprove" class="btn primary">Approve meals</button></span>
+    </div>
+  </section>
+
+  <section id="book">
+    <div class="weekhead"><h2>Recipe book</h2><span class="count" id="bkcount"></span></div>
+    <p class="sub">Every dinner in the household repertoire, with quantities and method. Tick several to export them together, or open one to read it, add a photograph, or send it to Paprika.</p>
+    <div class="tools">
+      <div class="seg" id="bkfilter" role="group" aria-label="Filter recipes">
+        <button data-f="all" class="on">All</button><button data-f="light">Light</button><button data-f="medium">Medium</button><button data-f="hearty">Hearty</button><button data-f="paprika">From Paprika</button><button data-f="week">This week</button>
+      </div>
+      <button class="btn primary" id="bkexport">Export to Paprika</button><button class="linkbtn" id="bkclear" hidden>Clear selection</button>
+      <span class="count" id="bkmsg" role="status"></span>
+    </div>
+    <div class="bklist" id="bklist"></div>
+    <details class="help"><summary>How to import into Paprika</summary>
+      <p>I'm only permitted to save standard file types, so it arrives as <code>.paprikarecipes.zip</code>, and the <code>.zip</code> has to come off before Paprika will open it. Re-importing a recipe you've exported before shouldn't make a duplicate, because each recipe keeps the same ID every time.</p>
+      <p><b>Mac:</b> in Finder, click the file, press Return and delete <code>.zip</code> from the end of the name (confirm "Use .paprikarecipes"). Double-click it to import. Or double-click the zip to unzip it, then double-click each <code>.paprikarecipe</code> file.</p>
+      <p><b>Windows:</b> turn on <i>View → File name extensions</i> in File Explorer, rename the file to remove <code>.zip</code>, then in Paprika choose <i>File → Import</i> and pick the file.</p>
+      <p><b>Android:</b> Android shows "unrecognised file" until the <code>.zip</code> comes off the name. Open the <i>Files</i> app (Files by Google or your phone's own), go to <i>Downloads</i>, long-press the file, choose <i>Rename</i> (under ⋮ if it isn't shown), delete <code>.zip</code> from the end and confirm the change of file type. Then tap the file and choose Paprika, or in Paprika use <i>Settings → Import</i> and pick it. For a single recipe, <b>Copy for Paprika</b> (below) is quicker.</p>
+      <p><b>iPhone, iPad or Android:</b> open a recipe and press <b>Copy for Paprika</b>. In Paprika, create a new recipe, tap the clipboard button, then highlight each part (title, ingredients, directions) and tap the matching field.</p>
+    </details>
+  </section>
+
+  <dialog id="rdlg" aria-labelledby="rdTitle">
+    <div class="rd">
+      <div class="rdhead"><h2 id="rdTitle"></h2><button class="btn" id="rdClose" aria-label="Close recipe">Close</button></div>
+      <div class="meta" id="rdMeta" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+      <div class="rdphoto" id="rdPhoto"></div><input type="file" id="rdFile" accept="image/*" hidden>
+      <div class="rdbody">
+        <div><div id="rdOptWrap" hidden style="margin-bottom:14px;padding:10px 12px;border:1px dashed var(--border,#bbb);border-radius:10px"><h3 style="margin-top:0">Optional vegetables <span class="count">add any you like</span></h3><ul id="rdOpt"></ul></div><h3>Ingredients</h3><ul id="rdIng"></ul></div>
+        <div><h3>Method</h3><ol id="rdMethod"></ol></div>
+      </div>
+      <div><h3>Notes</h3><p class="sub" id="rdNotes" style="margin:0"></p></div>
+      <div class="unotewrap"><label for="rdUser">User notes</label><textarea class="unote" id="rdUser" rows="2" maxlength="4000" placeholder="Anything Claude should know about this recipe"></textarea><span class="count" id="rdUserMsg" role="status"></span></div>
+      <div class="tools"><button class="btn primary" id="rdExport">Export to Paprika</button><button class="btn" id="rdCopy">Copy for Paprika</button><button class="btn" id="rdAdd">Add to this week's meals</button><span class="count" id="rdMsg" role="status"></span></div>
+    </div>
+  </dialog>
+
+
+
+  <section id="staples">
+    <h2>Your staples</h2>
+    <p class="sub">The thirty items you order most, by share of orders. The colour shows how often you tend to buy them again.</p>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--weekly)"></i>Weekly (≤ 9 days)</span>
+      <span><i class="sw" style="background:var(--fortnight)"></i>Fortnightly (10–17)</span>
+      <span><i class="sw" style="background:var(--monthly)"></i>Monthly-ish (18–35)</span>
+      <span><i class="sw" style="background:var(--rare)"></i>Occasional</span>
+    </div>
+    <div class="panel bars" id="bars"></div>
+  </section>
+
+  <section id="timeline">
+    <h2>Purchase timeline</h2>
+    <p class="sub">Each column is one order; a filled square means the item was in it, darker for more. I've marked as <span class="chip due">due</span> anything it's been longer than usual since you bought.</p>
+    <div class="panel scroll"><table class="tl" id="tl"></table></div>
+  </section>
+
+  <section id="prices">
+    <h2>Where specials matter</h2>
+    <p class="sub">The range you've paid for each regular item (your usual product, so pack sizes aren't mixed), as a share of the highest price, with a dot for the usual price. A long bar means it pays to wait for a special; a short one means there's no sense waiting.</p>
+    <div class="panel prices" id="pr"></div>
+  </section>
+
+  <section id="everything">
+    <h2>Everything you've ordered</h2>
+    <div class="tools">
+      <input type="search" id="q" placeholder="Search products or variants" aria-label="Search products">
+      <select id="cat" aria-label="Filter by category"><option value="">All categories</option></select>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="scroll"><table class="all" id="all"></table></div>
+  </section>
+  <footer class="foot">
+    <span>Copyright © 2026 CaelumIT</span>
+    <details><summary>MIT Licence</summary><p><b>MIT License</b></p><p>Copyright (c) 2026 CaelumIT</p><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p></details>
+  </footer>
+</div>
+
+<script>
+window.BOOK=__BOOK__;
+window.__servesPref={};
+window.__baseServes=id=>((window.BOOK||[]).find(r=>r.id===id)||{}).serves||0;
+window.__sv=id=>window.__servesPref[id]||window.__baseServes(id);
+window.__fx=id=>{const b=window.__baseServes(id);return b?window.__sv(id)/b:1};
+window.__sq=(rid,i)=>{const f=window.__fx(rid);if(f===1||!i.qty)return i.qty;
+  if(i.unit==="kg"){const st=i.step||0.1;const want=(i.need||i.qty)*f;return Math.max(st,Math.round(Math.ceil(want/st-0.05)*st*1000)/1000)}
+  if(i.need&&i.pack)return Math.max(1,Math.ceil(i.need*f/i.pack-0.08));
+  return Math.max(1,Math.ceil(i.qty*f-0.25))};
+window.__fmtQ=v=>{const w=Math.floor(v+1e-9),fr=v-w;const q=Math.round(fr*4);const g=["","¼","½","¾"];if(q===4)return String(w+1);return (w?String(w):"")+(q?g[q]:"")||"0"};
+window.__scaleLine=(a,f)=>{if(f===1||/:\s*$/.test(a))return a;
+  return a.replace(/^(\d+(?:\.\d+)?(?:\s+\d\/\d)?|\d\/\d|[½¼¾])(\s*[½¼¾])?(\s*)(kg|g|ml|l|L)?\b/,(m,n,frac,sp,u)=>{
+    let v=0;const F={"½":.5,"¼":.25,"¾":.75};
+    if(F[n]!==undefined)v=F[n];else if(/\d\/\d/.test(n)){const parts=n.trim().split(/\s+/);for(const x of parts){if(x.includes("/")){const[a2,b2]=x.split("/");v+=a2/b2}else v+=+x}}else v=+n;
+    if(frac)v+=F[frac.trim()]||0;v*=f;
+    if(u&&/^(g|ml)$/i.test(u)&&v>=50)return `${Math.round(v/10)*10}${sp}${u}`;
+    if(u)return `${Math.round(v*100)/100}${sp}${u}`;
+    return window.__fmtQ(v)+(sp||"")})};
+window.__setServes=null;
+{const base=window.__scaleLine;window.__scaleLine=(a,f)=>{const s=base(a,f);if(f===1)return s;return s.replace(/\b(about|approx\.?|~)\s*(\d+(?:\.\d+)?)\s?(kg|g)\b/gi,(m,w,n,u)=>{let v=+n*f;return /^g$/i.test(u)?`${w} ${Math.round(v/10)*10}${u}`:`${w} ${Math.round(v*100)/100}${u}`})}}window.PRICED=__PRICED__;
+const DATA=__DATA__;
+const TODAY=new Date("__TODAY__");
+const D=DATA.dates.map(s=>new Date(s)), N=D.length;
+const day=86400000, fmt=d=>d.toLocaleDateString("en-AU",{day:"numeric",month:"short"});
+const med=a=>{const s=[...a].sort((x,y)=>x-y);return s.length?s[Math.floor(s.length/2)]:null};
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const items=DATA.items.map(it=>{
+  const idx=Object.keys(it.d).map(Number).sort((a,b)=>a-b);
+  const gaps=idx.slice(1).map((v,i)=>Math.round((D[v]-D[idx[i]])/day));
+  const gap=med(gaps), last=D[idx[idx.length-1]], since=Math.round((TODAY-last)/day);
+  const qty=Object.values(it.d).reduce((a,b)=>a+b,0);
+  return {...it,idx,n:it.n,orders:idx.length,gap,last,since,qty,
+    min:Math.min(...it.p),max:Math.max(...it.p),usual:med(it.p),
+    due: idx.length>=4 && gap && since>gap*1.3};
+});
+const cad=it=>it.orders<4||!it.gap?"rare":it.gap<=9?"weekly":it.gap<=17?"fortnight":it.gap<=35?"monthly":"rare";
+const byOrders=[...items].sort((a,b)=>b.orders-a.orders||b.qty-a.qty);
+const spend=items.reduce((a,b)=>a+b.s,0);
+
+document.getElementById("stats").innerHTML=
+ `<span><b>${N}</b> orders</span><span><b>${fmt(D[0])} – ${fmt(D[N-1])}</b> 2026</span><span><b>${items.length}</b> products</span><span><b>$${Math.round(spend/N)}</b> avg order</span><span><b>${items.filter(i=>i.orders>=5).length}</b> bought in 5+ orders</span>`;
+
+document.getElementById("bars").innerHTML=byOrders.slice(0,30).map(it=>
+ `<div class="bar"><span class="nm" title="${esc(it.n)}">${esc(it.n)}</span><div class="track"><div class="fill" style="width:${it.orders/N*100}%;background:var(--${cad(it)})"></div></div><span class="v">${it.orders}/${N}</span></div>`).join("");
+
+// timeline
+const tl=byOrders.filter(i=>i.orders>=4);
+let head="<tr><th></th>"+D.map((d,i)=>`<th>${(i===0||d.getMonth()!==D[i-1].getMonth())?d.toLocaleDateString("en-AU",{month:"short"}):""}<br>${d.getDate()}</th>`).join("")+"<th class='mo'>Last</th></tr>";
+const maxq={};tl.forEach(it=>maxq[it.n]=Math.max(...Object.values(it.d)));
+document.getElementById("tl").innerHTML=head+tl.map(it=>{
+  const cells=D.map((_,i)=>{const q=it.d[i];if(!q)return `<td class="c"></td>`;
+    const o=.45+.55*(q/maxq[it.n]);return `<td class="c" title="${q} × ${esc(it.n)}, ${fmt(D[i])}" style="background:var(--${cad(it)==="rare"?"monthly":cad(it)});opacity:${o.toFixed(2)}"></td>`}).join("");
+  const st=it.due?`<span class="chip due">due · ${it.since}d ago</span>`:`<span class="chip">${it.since}d ago</span>`;
+  return `<tr><td class="nm" title="${esc(it.n)}">${esc(it.n)}</td>${cells}<td class="st">${st}</td></tr>`}).join("");
+
+// prices
+const pr=items.filter(i=>i.orders>=4&&i.vp).map(i=>{
+  const [vn,ps]=Object.entries(i.vp).sort((a,b)=>b[1].length-a[1].length)[0];
+  const min=Math.min(...ps),max=Math.max(...ps);
+  return {n:i.n+(Object.keys(i.vp).length>1?` · ${vn.replace(/^\* /,"")}`:""),buys:ps.length,min,max,usual:med(ps),spread:(max-min)/max};
+}).filter(i=>i.buys>=3&&i.max>0).sort((a,b)=>b.spread-a.spread);
+document.getElementById("pr").innerHTML=
+ `<div class="axis"><div></div><div><span>0%</span><span>50%</span><span>100% of top price</span></div><div></div></div>`+
+ pr.map(it=>{const L=it.min/it.max*100,U=it.usual/it.max*100;
+  const lbl=it.spread>=.05?`$${it.min.toFixed(2)}–${it.max.toFixed(2)} <b>−${Math.round(it.spread*100)}%</b>`:`$${it.usual.toFixed(2)} steady`;
+  return `<div class="pr"><span class="nm" title="${esc(it.n)}">${esc(it.n)}</span><div class="ptrack"><div class="prange" style="left:${L}%;width:${Math.max(100-L,.8)}%"></div><div class="pdot" style="left:${U}%"></div></div><span class="v">${lbl}</span></div>`}).join("");
+
+// table
+const cats=[...new Set(items.map(i=>i.c))].sort();
+const sel=document.getElementById("cat");cats.forEach(c=>sel.insertAdjacentHTML("beforeend",`<option>${esc(c)}</option>`));
+let sortK="orders",sortDir=-1;
+const cols=[["n","Product"],["c","Category","hide"],["orders","Orders"],["qty","Units","hide"],["usual","Usual $"],["range","Range","hide"],["last","Last bought"]];
+function draw(){
+  const q=document.getElementById("q").value.trim().toLowerCase(),c=sel.value;
+  let rows=items.filter(i=>(!c||i.c===c)&&(!q||i.n.toLowerCase().includes(q)||i.v.some(v=>v.toLowerCase().includes(q))));
+  rows.sort((a,b)=>{const x=a[sortK],y=b[sortK];return (typeof x==="string"?x.localeCompare(y):x-y)*sortDir});
+  document.getElementById("count").textContent=`${rows.length} of ${items.length}`;
+  document.getElementById("all").innerHTML="<thead><tr>"+cols.map(([k,l,h])=>`<th class="${h||""}"><button data-k="${k}">${l}${sortK===k?(sortDir<0?" ↓":" ↑"):""}</button></th>`).join("")+"</tr></thead><tbody>"+
+   rows.map(i=>`<tr><td>${i.v.length>1?`<details><summary>${esc(i.n)} <span class="count">(${i.v.length})</span></summary><ul>${i.v.map(v=>`<li>${esc(v)}</li>`).join("")}</ul></details>`:esc(i.n)}</td><td class="cat hide">${esc(i.c)}</td><td class="n">${i.orders}</td><td class="n hide">${+i.qty.toFixed(1)}</td><td class="n">$${i.usual.toFixed(2)}</td><td class="n hide">${i.min===i.max?"–":`$${i.min.toFixed(2)}–${i.max.toFixed(2)}`}</td><td class="n">${fmt(i.last)}</td></tr>`).join("")+"</tbody>";
+}
+items.forEach(i=>i.range=i.max-i.min);
+document.getElementById("all").addEventListener("click",e=>{const b=e.target.closest("button[data-k]");if(!b)return;
+  const k=b.dataset.k;sortDir=sortK===k?-sortDir:(k==="n"||k==="c"?1:-1);sortK=k;draw()});
+document.getElementById("q").addEventListener("input",draw);sel.addEventListener("change",draw);
+draw();
+
+// ---- weekly proposal + out-of list (shared db) ----
+(async()=>{
+  const $=id=>document.getElementById(id);
+  let db=null; try{db=await window.claude?.use?.("db")}catch(e){}
+  if(!db){$("wkstatus").textContent="Offline";$("wkempty").textContent="Open this page on claude.ai to review the weekly order.";$("outof").hidden=true;$("extra").hidden=true;$("pantry").hidden=true;return}
+  let prop=null, appr=null, sel={}, reqs={};
+  const CID=Math.random().toString(36).slice(2);
+  const rmBtn=(code,name,qty)=>{const r=reqs[code];return r?`<span class="chip${r.status==="done"?" ok":" sp"}">${r.status==="done"?"Removed from cart":"Removal requested"}</span>`:`<button class="linkbtn rm" data-rm="${code}" data-name="${esc(name)}" data-qty="${qty}">Remove from cart</button>`};
+  let rreqs={};
+  const NV=()=>window.__never||{};
+  const nvBtn=(code,name)=>NV()[code]?`<span class="nvchip"><span class="chip sp">Never order</span><button class="linkbtn" data-unnever="${code}">Undo</button></span>`:`<button class="linkbtn nv" data-never="${code}" data-name="${esc(name)}" title="Never put this product on a list again">Never order</button>`;
+  const rrBtn=(id,name)=>{const r=rreqs[id];return r?`<span class="chip${r.status==="done"?" ok":" sp"}">${r.status==="done"?"Recipe removed from cart":"Recipe removal requested"}</span>`:`<button class="linkbtn rm" data-rmr="${id}" data-name="${esc(name)}">Remove recipe from cart</button>`};
+  db.collection("never").onSnapshot(q=>{const m={};q.docs.forEach(d=>m[d.id]=d.data());window.__never=m;render();window.__mlRender?.()});
+  document.addEventListener("click",async e=>{const b=e.target.closest("button[data-never],button[data-unnever]");if(!b)return;e.preventDefault();b.disabled=true;
+    try{if(b.dataset.never){await db.doc("never/"+b.dataset.never).set({code:+b.dataset.never,name:b.dataset.name,added:new Date().toISOString()});
+        window.__never={...NV(),[b.dataset.never]:{code:+b.dataset.never,name:b.dataset.name}};
+        if(prop){render();saveDraft()} if(typeof ml!=="undefined"&&ml){mlRender();clearTimeout(mt);mt=setTimeout(()=>mlSave("draft").catch(()=>{}),800)}}
+      else{const cd=+b.dataset.unnever;await db.doc("never/"+cd).delete();const m={...NV()};delete m[cd];window.__never=m;if(prop){prop.lines.forEach(l=>{if(pickOf(l).code===cd&&sel[l.code])sel[l.code].on=true});render();saveDraft()}window.__mlRender?.()}}
+    catch(err){b.disabled=false}});
+  db.collection("cart_requests").onSnapshot(q=>{reqs={};rreqs={};q.docs.forEach(d=>{const x=d.data();if((x.week||"")!==(window.__wk||""))return;if(x.action==="remove")reqs[x.code]={...x,id:d.id};if(x.action==="remove_recipe")rreqs[x.recipe]={...x,id:d.id}});render();window.__mlRender?.()});
+  document.addEventListener("click",async e=>{const b=e.target.closest("button[data-rmr]");if(!b)return;e.preventDefault();b.disabled=true;
+    try{await db.doc("cart_requests/rr_"+(window.__wk||"")+"_"+b.dataset.rmr).set({action:"remove_recipe",week:window.__wk||"",recipe:b.dataset.rmr,name:b.dataset.name,status:"pending",requested:new Date().toISOString()})}catch(err){b.disabled=false}});
+  document.addEventListener("click",async e=>{const b=e.target.closest("button[data-rm]");if(!b)return;e.preventDefault();b.disabled=true;
+    try{await db.doc("cart_requests/rm_"+(window.__wk||"")+"_"+b.dataset.rm).set({action:"remove",week:window.__wk||"",code:+b.dataset.rm,name:b.dataset.name,qty:+b.dataset.qty,status:"pending",requested:new Date().toISOString()})}catch(err){b.disabled=false}});
+  const money=n=>"$"+Number(n).toFixed(2);
+  const bucket=l=>l.reasons.includes("out-of list")?"From your out-of list":l.reasons.includes("core")?"Weekly core":l.reasons.includes("drinks")?"Drinks":l.reasons.some(r=>r.startsWith("goes with"))?"Goes with this week's specials":l.reasons.includes("special")||l.reasons.includes("stock-up")?"On special":"Due for a re-buy";
+  const ORDER=["From your out-of list","Weekly core","Drinks","Due for a re-buy","On special","Goes with this week's specials"];
+  const pickOf=l=>sel[l.code]?.alt||{code:l.code,name:l.name,price:l.price};
+  function total(){return (prop?.lines||[]).reduce((a,l)=>a+(sel[l.code]?.on?(pickOf(l).price||0)*sel[l.code].qty:0),0)}
+  function render(){
+    if(!prop){$("wkbar").hidden=true;return}
+    prop.lines.forEach(l=>{if(sel[l.code]&&NV()[pickOf(l).code])sel[l.code].on=false});
+    const locked=appr?.date===prop.date&&(appr.status==="approved"||appr.status==="added"||appr.status==="ordered");
+    $("wkstatus").className="chip"+(locked?" ok":"");
+    const dstr=new Date(prop.date).toLocaleDateString("en-AU",{weekday:"short",day:"numeric",month:"short"});
+    $("wkstatus").textContent=dstr+" · "+(appr?.date===prop.date?({approved:"Approved · waiting for cart run",added:"Added to cart",ordered:"Ordered ✓",draft:"Draft"}[appr.status]||"Needs review"):"Needs review");
+    const groups={};prop.lines.forEach(l=>(groups[bucket(l)]??=[]).push(l));
+    $("wkpanel").innerHTML=ORDER.filter(g=>groups[g]&&(!window.__wkFilter||window.__wkFilter.includes(g))).map(g=>`<div class="wkgroup"><h3>${g} · ${groups[g].length}</h3>${groups[g].map(l=>{
+      const s=sel[l.code];const chips=l.reasons.filter(r=>!r.startsWith("goes with")).map(r=>`<span class="chip${r==="special"||r==="stock-up"?" sp":r==="core"?" core":""}">${esc(r)}</span>`).join("")+(l.disc?`<span class="chip sp">−${l.disc}%</span>`:"");
+      return `<div class="wl"><input type="checkbox" id="c${l.code}" data-code="${l.code}" ${s.on?"checked":""} ${locked||NV()[pickOf(l).code]?"disabled":""} aria-label="Include ${esc(l.name)}">
+      <label for="c${l.code}">${l.outof_text?`<div class="count">"${esc(l.outof_text)}" →</div>`:""}<div class="nm">${esc(pickOf(l).name)}</div>${l.alts?.length?`<select class="altsel" data-altfor="${l.code}" ${locked?"disabled":""} aria-label="Choose a different product for ${esc(l.outof_text||l.name)}"><option value="${l.code}">${esc(l.name)} · $${(+l.price||0).toFixed(2)}</option>${l.alts.map(a=>`<option value="${a.code}" ${pickOf(l).code===a.code?"selected":""}>${esc(a.name)} · $${(+a.price||0).toFixed(2)}</option>`).join("")}</select>`:""}<div class="meta">${chips}${l.cup?`<span class="count">${esc(l.cup)}</span>`:""}${locked&&!NV()[pickOf(l).code]?"":nvBtn(pickOf(l).code,pickOf(l).name)}</div>${l.reasons.filter(r=>r.startsWith("goes with")).map(r=>`<div class="count">${esc(r)}</div>`).join("")}${l.flags.map(f=>`<div class="flag">${esc(f)}</div>`).join("")}</label>
+      <div class="rt">${!s.alt&&l.was&&l.was>l.price?`<span class="was">${money(l.was)}</span>`:""}${l.unit==="kg"?`<span>${money((pickOf(l).price||0)*s.qty)}</span><span class="count">${money(pickOf(l).price||0)}/kg</span>`:`<span>${money(pickOf(l).price||0)}</span>`}
+      <span class="qty"><button data-q="-1" data-code="${l.code}" ${locked?"disabled":""} aria-label="Fewer">−</button><span>${l.unit==="kg"?s.qty+" kg":s.qty}</span><button data-q="1" data-code="${l.code}" ${locked?"disabled":""} aria-label="More">+</button></span>${appr?.status==="added"&&s.on?rmBtn(l.code,l.name,s.qty):""}</div></div>`}).join("")}</div>`).join("")
+      +(prop.notes?.length?`<div class="notes">${prop.notes.map(n=>`<div>${esc(n)}</div>`).join("")}</div>`:"");
+    if(!$("wkpanel").querySelector(".wl"))$("wkpanel").insertAdjacentHTML("afterbegin",`<p class="sub">${esc(window.__wkEmptyMsg||"Nothing here this week.")}</p>`);$("wkbar").hidden=false;
+    const n=Object.values(sel).filter(s=>s.on).length;
+    $("wktotal").textContent=`${n} items · ${money(total())}`+(prop.cart_existing?` + ${prop.cart_existing} already in cart`:"");
+    const st=appr?.date===prop.date?appr.status:null;
+    $("approve").disabled=st==="added"||st==="ordered"||(!locked&&!n);$("approve").textContent=st==="ordered"?"Ordered ✓":st==="added"?"Added to cart":st==="approved"?"Unapprove":"Approve for cart";
+    $("approve").className="btn"+(st==="approved"?"":" primary");window.__flUpdate?.();
+  }
+  function initSel(){const AP=appr&&appr.status!=="pending"?appr:null;sel={};(prop?.lines||[]).forEach(l=>{const a=AP?.date===prop.date?AP.lines?.find(x=>x.code===l.code):null;
+    const aa=AP?.date===prop.date?AP.lines?.find(x=>x.outof_text&&x.outof_text===l.outof_text&&x.code!==l.code):null;
+    sel[l.code]={on:AP?.date===prop.date?!!(a||aa):l.tick,qty:(a||aa)?.qty??l.qty,alt:aa?{...(l.alts||[]).find(z=>z.code===aa.code)}:null}})}
+  let t=null;const saveDraft=()=>{clearTimeout(t);t=setTimeout(()=>db.doc("weekly/approval").set({by:CID,date:prop.date,status:"draft",lines:chosen(),updatedAt:new Date().toISOString()}).catch(()=>{}),800)};
+  const chosen=()=>prop.lines.filter(l=>sel[l.code].on&&sel[l.code].qty>0).map(l=>{const p=pickOf(l);return {code:p.code,qty:sel[l.code].qty,name:p.name,group:l.group,...(l.outof_text?{outof_text:l.outof_text}:{})}});
+  window.__wkRender=()=>render();window.__wkChosen=()=>prop?chosen():[];window.__wkInfo=()=>({prop,appr});
+  window.__wkPriced=()=>prop?prop.lines.filter(l=>sel[l.code]?.on&&sel[l.code].qty>0).map(l=>({name:pickOf(l).name,qty:sel[l.code].qty,price:pickOf(l).price||0,unit:l.unit,bucket:bucket(l)})):[];
+  window.__wkSave=st=>{clearTimeout(t);return db.doc("weekly/approval").set({by:CID,date:prop.date,status:st,lines:chosen(),[st==="approved"?"approvedAt":"updatedAt"]:new Date().toISOString()})};
+  $("wkpanel").addEventListener("change",e=>{const af=e.target.dataset.altfor;if(af){const l=prop.lines.find(x=>String(x.code)===af);const v=+e.target.value;sel[af].alt=v===l.code?null:{...l.alts.find(a=>a.code===v)};sel[af].on=true;render();saveDraft();return}const c=e.target.dataset.code;if(!c)return;sel[c].on=e.target.checked;render();saveDraft()});
+  $("wkpanel").addEventListener("click",e=>{const b=e.target.closest("button[data-q]");if(!b)return;const s=sel[b.dataset.code];const ln=prop.lines.find(x=>String(x.code)===b.dataset.code);const st=ln?.unit==="kg"?(ln.step||0.1):1;s.qty=Math.max(0,Math.round((s.qty+(+b.dataset.q)*st)*1000)/1000);s.on=s.qty>0;render();saveDraft()});
+  $("approve").addEventListener("click",async()=>{clearTimeout(t);$("approve").disabled=true;
+    const un=appr?.date===prop.date&&appr.status==="approved";
+    try{await db.doc("weekly/approval").set(un?{by:CID,date:prop.date,status:"draft",lines:chosen(),updatedAt:new Date().toISOString()}:{by:CID,date:prop.date,status:"approved",lines:chosen(),approvedAt:new Date().toISOString()})}
+    catch(e){$("wkstatus").textContent="Couldn't save approval - try again";$("approve").disabled=false}});
+  db.doc("weekly/current").onSnapshot(s=>{prop=s.exists?s.data():null;window.__wk=prop?.date||"";initSel();render()});
+  db.doc("weekly/approval").onSnapshot(s=>{const a=s.exists?s.data():null;const first=!appr;appr=a;if(first||a?.status!=="draft"||a?.by!==CID)initSel();render()});
+  // ---- meals ----
+  let ml=null, mla=null, msel={}, isel={}, madd=null;
+  let mex=null;const openIng=new Set();let vegPrefs={};const prefHas=(rid,k)=>!!k&&(vegPrefs[rid]||[]).includes(k);const EX=()=>mex&&ml&&mex.date===ml.date?mex:{shuffled:[],hidden:[]};
+  const OPTS=()=>{const base=ml?.options||[];const ad=(madd&&ml&&madd.date===ml.date?madd.options:[])||[];const hid=new Set(EX().hidden||[]);const out=[];const seen=new Set();
+    for(const o of [...base,...ad,...(EX().shuffled||[])]){if(seen.has(o.id)||hid.has(o.id)||(window.__delRecipes||new Set()).has(o.id))continue;seen.add(o.id);out.push(o)}return out};
+  const SERVES=Object.fromEntries((window.BOOK||[]).map(r=>[r.id,r.serves]));let people=2;
+  db.doc("settings/household").onSnapshot(x=>{if(x.exists&&x.data().people)people=x.data().people;mlRender()});
+  const setPeople=v=>{people=Math.max(1,Math.min(12,v));mlRender();db.doc("settings/household").set({people}).catch(()=>{})};
+  $("pplDown").addEventListener("click",()=>setPeople(people-1));$("pplUp").addEventListener("click",()=>setPeople(people+1));
+  const ikey=(r,c)=>r+"|"+c;
+  function mlInit(){msel={};isel={};OPTS().forEach(o=>{const a=mla?.date===ml.date&&mla.status!=="pending";msel[o.id]=a?(mla.recipes||[]).includes(o.id):!!o.pick;
+    o.ingredients.forEach(i=>{if(!i.code)return;const k=ikey(o.id,i.code);isel[k]=a&&mla.skip?(!mla.skip.includes(k)&&(!i.optional||prefHas(o.id,i.key))):!i.in_cart&&!i.in_staples&&!i.in_pantry&&i.available!==false&&(!i.optional||prefHas(o.id,i.key))})})}
+  function mlLines(){const m={};OPTS().filter(o=>msel[o.id]).forEach(o=>o.ingredients.forEach(i=>{if(!i.code||!isel[ikey(o.id,i.code)]||NV()[i.code])return;
+    (m[i.code]??={code:i.code,name:i.name,qty:0,price:i.price||0,recipes:[]});m[i.code].qty=Math.round((m[i.code].qty+window.__sq(o.id,i))*1000)/1000;m[i.code].recipes.push(o.name)}));return Object.values(m)}
+  window.__mlRender=()=>mlRender();
+  function mlRender(){
+    if(!ml)return;window.__weekPicks=new Set(Object.keys(msel).filter(k=>msel[k]));
+    const locked=mla?.date===ml.date&&(mla.status==="approved"||mla.status==="added"||mla.status==="ordered");$("mlshuffle").disabled=locked;
+    $("mlstatus").className="chip"+(locked?" ok":"");
+    $("mlstatus").textContent=new Date(ml.date).toLocaleDateString("en-AU",{weekday:"short",day:"numeric",month:"short"})+" · "+(mla?.date===ml.date?({approved:"Approved · waiting for cart run",added:"Added to cart",ordered:"Ordered ✓",draft:"Draft"}[mla.status]||"Choose meals"):"Choose meals");
+    $("fc").innerHTML=(ml.forecast||[]).map(d=>`<div><b>${new Date(d.date).toLocaleDateString("en-AU",{weekday:"short"})}</b><span class="t">${Math.round(d.evening??d.max)}°</span><span class="r">evening</span><span class="r">high ${Math.round(d.max)}° · ${d.rain>0.2?d.rain.toFixed(0)+"mm":"dry"}</span></div>`).join("");
+    $("mlgrid").innerHTML=OPTS().map(o=>`<article class="card${msel[o.id]?" on":""}"><div class="top"><input type="checkbox" id="m_${o.id}" data-r="${o.id}" ${msel[o.id]?"checked":""} ${locked?"disabled":""}>
+      <label for="m_${o.id}"><h3>${esc(o.name)}</h3><div class="meta" style="display:flex;flex-wrap:wrap;gap:4px;margin-top:5px"><span class="chip ${o.weight}">${o.weight}</span>${o.source==="new"?'<span class="chip new">new idea</span>':o.source==="paprika"?'<span class="chip core">from Paprika</span>':""}<span class="chip">${o.mins} min</span><span class="chip">serves ${window.__sv(o.id)||"?"}</span><span class="chip">~$${(o.cost*window.__fx(o.id)).toFixed(0)}</span></div></label></div>
+      <div class="why">${o.why.map(esc).join(" · ")}</div><span style="display:flex;gap:14px;flex-wrap:wrap;align-items:center"><span class="qty" title="Scale this recipe"><button type="button" data-svd="${o.id}" data-d="-1" ${locked?"disabled":""} aria-label="Fewer serves">−</button><span>${window.__sv(o.id)} serves</span><button type="button" data-svd="${o.id}" data-d="1" ${locked?"disabled":""} aria-label="More serves">+</button></span><button class="linkbtn" data-view="${o.id}">View recipe</button>${locked?"":`<button class="linkbtn nv" data-delrec="${o.id}" data-name="${esc(o.name)}" title="Remove this recipe from the recipe book for good">Delete recipe</button>`}${mla?.date===ml.date&&mla.status==="added"&&msel[o.id]?rrBtn(o.id,o.name):""}</span>
+      <details data-ing="${o.id}" ${openIng.has(o.id)?"open":""}><summary>Ingredients (${o.ingredients.length})</summary><ul class="ing">${[...o.ingredients].sort((a,b)=>(b.optional?1:0)-(a.optional?1:0)).map(i=>`<li><label><input type="checkbox" data-k="${ikey(o.id,i.code)}" ${!i.code||i.available===false?"disabled":""} ${isel[ikey(o.id,i.code)]&&!NV()[i.code]?"checked":""} ${locked?"disabled":""}><span>${(q=>i.unit==="kg"?q+" kg ":q>1?q+" × ":"")(window.__sq(o.id,i))}${i.optional?'<span class="chip sp" style="margin-right:4px">add veg</span>':""}${esc(i.name)}${i.note?` <span class="count">· ${esc(i.note)}</span>`:""}${i.in_cart?' <span class="count">(in cart)</span>':""}${i.available===false?' <span class="flag">unavailable</span>':""}${i.code&&(!locked||NV()[i.code])?" "+nvBtn(i.code,i.name):""}${mla?.date===ml.date&&mla.status==="added"&&isel[ikey(o.id,i.code)]&&i.code?" "+rmBtn(i.code,i.name,i.qty):""}</span><span class="p">${i.price?((i.special?`<span class="s">$${(i.price*(window.__sq(o.id,i)||1)).toFixed(2)}</span>`:"$"+(i.price*(window.__sq(o.id,i)||1)).toFixed(2))+(i.unit==="kg"?`<span class="count" style="display:block;font-size:11px">$${i.price.toFixed(2)}/kg</span>`:(window.__sq(o.id,i)>1?`<span class="count" style="display:block;font-size:11px">$${i.price.toFixed(2)} each</span>`:""))):""}</span></label></li>`).join("")}</ul>
+      ${o.extras?.length?`<p class="extras">From the pantry: ${o.extras.map(esc).join(", ")}</p>`:""}</details></article>`).join("");
+    const L=mlLines(), n=Object.values(msel).filter(Boolean).length;
+    $("mlbar").hidden=false;$("mltotal").textContent=`${n} meals · ${L.length} products · $${L.reduce((a,l)=>a+l.price*l.qty,0).toFixed(2)}`;
+    const serv=OPTS().filter(o=>msel[o.id]).reduce((a,o)=>a+(window.__sv(o.id)||0),0), need=n*people, left=serv-need;
+    $("srv").hidden=false;$("mlPeople").textContent=people;
+    $("srvText").innerHTML=n?`<b>${serv} servings</b> from ${n} dinners · ${people} × ${n} = ${need} eaten at dinner · `+(left>0?`<b class="okc">${left} left over</b> for lunches (about ${Math.floor(left/people)} lunch${Math.floor(left/people)===1?"":"es"} for ${people})`:left===0?"no leftovers, so buy lunches":`<b class="warnc">${-left} short</b>, so add a meal or buy extra`):"Choose meals to see servings";
+    const mst=mla?.date===ml.date?mla.status:null;
+    $("mlapprove").disabled=mst==="added"||mst==="ordered"||(!locked&&!n);$("mlapprove").textContent=mst==="ordered"?"Ordered ✓":mst==="added"?"Added to cart":mst==="approved"?"Unapprove":"Approve meals";
+    $("mlapprove").className="btn"+(mst==="approved"?"":" primary");window.__flUpdate?.();window.__schedRender?.();
+  }
+  let mt=null;const mlSave=status=>db.doc("weekly/meals_approval").set({by:CID,date:ml.date,status,recipes:Object.keys(msel).filter(k=>msel[k]),skip:Object.keys(isel).filter(k=>!isel[k]),lines:mlLines().map(({code,qty,name})=>({code,qty,name})),updatedAt:new Date().toISOString()});
+  window.__mlLines=()=>ml?mlLines():[];window.__mlChosenIds=()=>ml?OPTS().filter(o=>msel[o.id]).map(o=>o.id):null;window.__mlChosen=()=>OPTS().filter(o=>msel[o.id]).map(o=>o.name);window.__mlInfo=()=>({ml,mla});window.__mlSave=st=>{clearTimeout(mt);return mlSave(st)};
+  const mlLocked=()=>!!(ml&&mla&&mla.date===ml.date&&["approved","added","ordered"].includes(mla.status));
+  const savePref=(rid,k,on)=>{const ks=new Set(vegPrefs[rid]||[]);on?ks.add(k):ks.delete(k);vegPrefs[rid]=[...ks];db.doc("veg_prefs/"+rid).set({keys:[...ks],updated:new Date().toISOString()}).catch(()=>{})};
+  window.__vegState=rid=>{const o=OPTS().find(x=>x.id===rid);const st={};if(o)o.ingredients.forEach(i=>{if(i.optional&&i.key&&i.code)st[i.key]=!!isel[ikey(rid,i.code)]});return {inWeek:!!o,locked:!!o&&mlLocked(),has:k=>k in st?st[k]:prefHas(rid,k)}};
+  window.__vegSet=(rid,k,on)=>{savePref(rid,k,on);const o=OPTS().find(x=>x.id===rid);if(o&&!mlLocked()){const i=o.ingredients.find(i=>i.optional&&i.key===k);if(i&&i.code){isel[ikey(rid,i.code)]=on;mlRender();clearTimeout(mt);mt=setTimeout(()=>mlSave("draft").catch(()=>{}),800)}}window.__rdRefresh?.()};
+  db.collection("veg_prefs").onSnapshot(q=>{vegPrefs={};q.docs.forEach(d=>vegPrefs[d.id]=d.data().keys||[]);
+    if(ml&&!(mla&&mla.date===ml.date&&mla.status!=="pending")){mlInit();mlRender()}window.__rdRefresh?.()});
+  $("mlgrid").addEventListener("change",e=>{const k=e.target.dataset.k;if(!k)return;const ix=k.indexOf("|");const rid=k.slice(0,ix),code=k.slice(ix+1);
+    const o=OPTS().find(x=>x.id===rid);const i=o?.ingredients.find(i=>String(i.code)===code);if(i&&i.optional&&i.key){savePref(rid,i.key,e.target.checked);window.__rdRefresh?.()}});
+  window.__setServes=(rid,n)=>{const b=window.__baseServes(rid);n=Math.max(1,Math.min(20,n));if(!b)return;
+    if(n===b)delete window.__servesPref[rid];else window.__servesPref[rid]=n;
+    db.doc("recipe_serves/"+rid).set({serves:n,updated:new Date().toISOString()}).catch(()=>{});
+    if(ml){mlRender();if(OPTS().some(o=>o.id===rid)&&!mlLocked()){clearTimeout(mt);mt=setTimeout(()=>mlSave("draft").catch(()=>{}),800)}}
+    window.renderBook?.();window.__rdRefresh?.()};
+  window.__servesLocked=rid=>!!(ml&&OPTS().some(o=>o.id===rid)&&mlLocked());
+  db.collection("recipe_serves").onSnapshot(q=>{const m={};q.docs.forEach(d=>{const s=d.data().serves;if(s&&s!==window.__baseServes(d.id))m[d.id]=s});window.__servesPref=m;if(ml)mlRender();window.renderBook?.();window.__rdRefresh?.()});
+  $("mlgrid").addEventListener("click",e=>{const b=e.target.closest("button[data-svd]");if(!b)return;e.preventDefault();window.__setServes(b.dataset.svd,window.__sv(b.dataset.svd)+(+b.dataset.d))});
+  $("mlgrid").addEventListener("toggle",e=>{const d=e.target;if(d&&d.dataset&&d.dataset.ing){d.open?openIng.add(d.dataset.ing):openIng.delete(d.dataset.ing)}},true);
+  $("mlgrid").addEventListener("change",e=>{const r=e.target.dataset.r,k=e.target.dataset.k;if(r)msel[r]=e.target.checked;if(k)isel[k]=e.target.checked;mlRender();clearTimeout(mt);mt=setTimeout(()=>mlSave("draft").catch(()=>{}),800)});
+  $("mlexport").addEventListener("click",()=>window.exportRecipes((window.BOOK||[]).filter(r=>msel[r.id]),$("mltotal")));
+  $("mlapprove").addEventListener("click",async()=>{clearTimeout(mt);$("mlapprove").disabled=true;try{await mlSave(mla?.date===ml.date&&mla.status==="approved"?"draft":"approved")}catch(e){$("mlstatus").textContent="Couldn't save - try again";$("mlapprove").disabled=false}});
+  $("mlgrid").addEventListener("click",e=>{const h=e.target.closest("[data-delrec]");if(h){e.preventDefault();
+      if(!h.dataset.armed){h.dataset.armed="1";h.textContent="Confirm delete?";setTimeout(()=>{if(h.isConnected){delete h.dataset.armed;h.textContent="Delete recipe"}},5000);return}
+      deleteRecipe(h.dataset.delrec,h.dataset.name);return}const b=e.target.closest("[data-view]");if(b)window.openRecipe?.(b.dataset.view)});
+  const mlDraft=()=>{clearTimeout(mt);mt=setTimeout(()=>mlSave("draft").catch(()=>{}),800)};
+  const saveEx=x=>db.doc("weekly/meals_extra").set({date:ml.date,shuffled:x.shuffled||[],hidden:x.hidden||[],updatedAt:new Date().toISOString()});
+  async function hideMeal(id,name){if(!ml)return;const x=EX();const nx={shuffled:(x.shuffled||[]).filter(o=>o.id!==id),hidden:[...new Set([...(x.hidden||[]),id])]};
+    msel[id]=false;mex={date:ml.date,...nx};mlRender();window.renderBook?.();$("mlshmsg").textContent=`Removed ${name} from this week's meals.`;
+    try{await saveEx(nx);mlDraft()}catch(e){$("mlshmsg").textContent="Couldn't save that change. Try again."}}
+  async function deleteRecipe(id,name){
+    window.__delRecipes=new Set([...(window.__delRecipes||[]),id]);
+    try{await db.doc("recipe_deletes/"+id).set({id,name,status:"pending",requested:new Date().toISOString()})}catch(e){$("mlshmsg").textContent="Couldn't delete that recipe. Try again.";return}
+    await hideMeal(id,name);$("mlshmsg").textContent=`Deleted ${name}. It's gone from this week and the recipe book; Claude keeps a backup if you want it back.`}
+  db.collection("recipe_deletes").onSnapshot(q=>{window.__delRecipes=new Set(q.docs.map(d=>d.id));if(ml)mlRender();window.renderBook?.()});
+  $("mlshuffle").addEventListener("click",async()=>{if(!ml)return;
+    const cur=OPTS();const added=new Set(((madd&&madd.date===ml.date&&madd.options)||[]).map(o=>o.id));
+    const drop=cur.filter(o=>!msel[o.id]&&!added.has(o.id)).map(o=>o.id);const keep=new Set(cur.map(o=>o.id).filter(id=>!drop.includes(id)));
+    const n=Math.max(drop.length,4);
+    const pool=Object.values(window.PRICED||{}).filter(o=>!(window.__delRecipes||new Set()).has(o.id)).filter(o=>!keep.has(o.id)&&!drop.includes(o.id)&&!(o.missing||[]).length);
+    const wt=o=>Math.exp(o.score||1)*(o.cooked?1/(1+0.6*o.cooked):2.5)*(o.recent?0.15:1);
+    const picks=[];const p2=[...pool];
+    while(picks.length<n&&p2.length){const tot=p2.reduce((a,o)=>a+wt(o),0);let r=Math.random()*tot,k=0;for(;k<p2.length-1;k++){r-=wt(p2[k]);if(r<=0)break}picks.push(p2.splice(k,1)[0])}
+    if(!picks.length){$("mlshmsg").textContent="No other recipes to suggest right now.";return}
+    const x=EX();const pid=new Set(picks.map(o=>o.id));
+    const nx={shuffled:[...(x.shuffled||[]).filter(o=>keep.has(o.id)),...picks.map(o=>({...o,why:[o.cooked?"suggested by shuffle":"suggested by shuffle · not made yet",...(o.why||[]).filter(w=>!/cooked in the last/.test(w))],pick:false}))],
+      hidden:[...new Set([...(x.hidden||[]),...drop])].filter(id=>!pid.has(id))};
+    drop.forEach(id=>msel[id]=false);picks.forEach(o=>{msel[o.id]=false;o.ingredients.forEach(i=>{if(i.code)isel[ikey(o.id,i.code)]=!i.in_cart&&!i.in_staples&&!i.in_pantry&&i.available!==false&&(!i.optional||prefHas(o.id,i.key))})});
+    mex={date:ml.date,...nx};mlRender();window.renderBook?.();
+    $("mlshmsg").textContent=`${picks.length} new idea${picks.length>1?"s":""}: ${picks.map(o=>o.name).join(", ")}. Tick any you'd like.`;
+    try{await saveEx(nx);mlDraft()}catch(e){$("mlshmsg").textContent="Couldn't save the shuffle. Try again."}});
+  db.doc("weekly/meals_extra").onSnapshot(s=>{mex=s.exists?s.data():null;if(!ml)return;const a=mla?.date===ml.date&&mla.status!=="pending";
+    OPTS().forEach(o=>{if(msel[o.id]===undefined){msel[o.id]=a?(mla.recipes||[]).includes(o.id):false;o.ingredients.forEach(i=>{if(!i.code)return;const k=ikey(o.id,i.code);if(isel[k]===undefined)isel[k]=a&&mla.skip?(!mla.skip.includes(k)&&(!i.optional||prefHas(o.id,i.key))):!i.in_cart&&!i.in_staples&&!i.in_pantry&&i.available!==false&&(!i.optional||prefHas(o.id,i.key))})}});mlRender();window.renderBook?.()});
+  db.doc("weekly/meals_added").onSnapshot(s=>{madd=s.exists?s.data():null;if(!ml)return;const a=mla?.date===ml.date&&mla.status!=="pending";OPTS().forEach(o=>{if(msel[o.id]===undefined){msel[o.id]=a?(mla.recipes||[]).includes(o.id):true;o.ingredients.forEach(i=>{if(!i.code)return;const k=ikey(o.id,i.code);if(isel[k]===undefined)isel[k]=a&&mla.skip?(!mla.skip.includes(k)&&(!i.optional||prefHas(o.id,i.key))):!i.in_cart&&!i.in_staples&&!i.in_pantry&&i.available!==false&&(!i.optional||prefHas(o.id,i.key))})}});mlRender();window.renderBook?.()});
+  window.addToWeek=async id=>{
+    if(!ml||!db)return"Not ready yet, try again in a moment.";
+    const st=mla?.date===ml.date?mla.status:null;
+    if(st==="approved")return"This week's meals are approved. Unapprove them first, then add it.";
+    if(st==="added"||st==="ordered")return"This week's meals are already in the cart.";
+    const save=()=>{clearTimeout(mt);mt=setTimeout(()=>mlSave("draft").catch(()=>{}),800)};
+    if(OPTS().some(o=>o.id===id)){msel[id]=true;mlRender();save();window.renderBook?.();return"Already one of this week's options. I've ticked it."}
+    const o=(window.PRICED||{})[id];if(!o)return"No pricing for this recipe yet. Claude will add it at the next run.";
+    const add={...o,why:["added from the recipe book"],pick:true};
+    msel[id]=true;add.ingredients.forEach(i=>{if(!i.code)return;isel[ikey(id,i.code)]=!i.in_cart&&!i.in_staples&&!i.in_pantry&&i.available!==false&&(!i.optional||prefHas(o.id,i.key))});
+    const cur=madd?.date===ml.date?madd.options:[];
+    try{await db.doc("weekly/meals_added").set({date:ml.date,options:[...cur,add]})}catch(e){delete msel[id];return"Couldn't add it, try again."}
+    save();return"Added to this week's meals."};
+  db.doc("weekly/meals").onSnapshot(s=>{ml=s.exists?s.data():null;window.__weekPicks=new Set(OPTS().filter(o=>msel[o.id]??o.pick).map(o=>o.id));mlInit();mlRender();window.renderBook?.()});
+  db.doc("weekly/meals_approval").onSnapshot(s=>{const a=s.exists?s.data():null;const first=!mla;mla=a;if(first||a?.status!=="draft"||a?.by!==CID)mlInit();mlRender()});
+
+  // out-of list
+  db.collection("outof").orderBy("added").onSnapshot(q=>{$("ofList").innerHTML=q.docs.map(d=>{const x=d.data();const stt=x.status||"waiting for Friday";return `<li>${esc(String(x.text||""))}<span class="chip${stt==="in cart"?" ok":stt==="needs a pick"||stt==="not found"?" sp":""}">${esc(stt)}</span>${x.match?`<span class="count">→ ${esc(x.match)}</span>`:""}<button data-id="${d.id}" aria-label="Remove">×</button></li>`}).join("")||`<li class="count" style="border:0;background:none;padding-left:0">Nothing yet.</li>`});
+  $("ofForm").addEventListener("submit",async e=>{e.preventDefault();const v=$("ofText").value.trim();if(!v)return;$("ofText").value="";
+    try{await db.collection("outof").add({text:v.slice(0,80),added:new Date().toISOString()})}catch(err){$("ofText").value=v}});
+  $("ofList").addEventListener("click",e=>{const b=e.target.closest("button[data-id]");if(b)db.doc("outof/"+b.dataset.id).delete().catch(()=>{})});
+  // extra stock
+  db.collection("stock").orderBy("added").onSnapshot(q=>{$("exList").innerHTML=q.docs.map(d=>{const x=d.data();const stt=x.status||"waiting for Friday";return `<li>${esc(String(x.count||""))} × ${esc(String(x.text||""))}<span class="chip${stt==="recorded"?" ok":stt==="not matched"?" sp":""}">${esc(stt)}</span>${x.match?`<span class="count">→ ${esc(x.match)}</span>`:""}<button data-id="${d.id}" aria-label="Remove">×</button></li>`}).join("")||`<li class="count" style="border:0;background:none;padding-left:0">Nothing yet.</li>`});
+  $("exForm").addEventListener("submit",async e=>{e.preventDefault();const v=$("exText").value.trim(),n=Math.max(1,Math.min(99,parseInt($("exCount").value)||0));if(!v)return;$("exText").value="";
+    try{await db.collection("stock").add({text:v.slice(0,80),count:n,added:new Date().toISOString()})}catch(err){$("exText").value=v}});
+  $("exList").addEventListener("click",e=>{const b=e.target.closest("button[data-id]");if(b)db.doc("stock/"+b.dataset.id).delete().catch(()=>{})});
+  // pantry
+  let PN=[],pnAll=false;const PN_MAX=18;
+  const pnRender=()=>{const f=$("pnText").value.trim().toLowerCase().split(",").pop().trim();const L=PN.filter(x=>!f||x.t.includes(f));const show=(pnAll||f)?L:L.slice(0,PN_MAX);
+    $("pnList").innerHTML=(show.map(x=>`<li>${esc(x.t)}<button data-id="${x.id}" aria-label="Remove ${esc(x.t)}">×</button></li>`).join("")
+      +(L.length>show.length?`<li class="more"><button class="morebtn" data-more="1">+${L.length-show.length} more</button></li>`:pnAll&&!f&&PN.length>PN_MAX?`<li class="more"><button class="morebtn" data-more="0">Show less</button></li>`:""))
+      ||`<li class="count" style="border:0;background:none;padding-left:0">${f?"Not in the pantry yet — press Add":"Nothing yet."}</li>`};
+  db.collection("pantry").orderBy("text").onSnapshot(q=>{PN=q.docs.map(d=>({id:d.id,t:String(d.data().text||"")}));pnRender()});
+  $("pnText").addEventListener("input",pnRender);
+  $("pnList").addEventListener("click",e=>{const m=e.target.closest("button[data-more]");if(m){e.stopImmediatePropagation();pnAll=m.dataset.more==="1";pnRender()}},true);
+  $("pnForm").addEventListener("submit",async e=>{e.preventDefault();const vs=$("pnText").value.split(",").map(s=>s.trim().toLowerCase()).filter(v=>v&&!PN.some(x=>x.t===v));$("pnText").value="";pnRender();if(!vs.length)return;
+    for(const v of vs){try{await db.collection("pantry").add({text:v.slice(0,60).toLowerCase(),added:new Date().toISOString()})}catch(err){}}});
+  $("pnList").addEventListener("click",async e=>{const b=e.target.closest("button[data-id],button[data-act]");if(!b)return;const li=b.closest("li");
+    if(b.dataset.id){const txt=li.firstChild.textContent;li.dataset.pid=b.dataset.id;li.dataset.txt=txt;
+      li.innerHTML=`<span>Out of ${esc(txt)}?</span><button class="linkbtn" data-act="order">Add to next order</button><button class="linkbtn" data-act="remove">Just remove</button><button data-act="cancel" aria-label="Keep in pantry">×</button>`;li.querySelector('[data-act="order"]').focus();return}
+    const id=li.dataset.pid,txt=li.dataset.txt;
+    if(b.dataset.act==="cancel"){li.innerHTML=`${esc(txt)}<button data-id="${id}" aria-label="Remove ${esc(txt)}">×</button>`;return}
+    try{if(b.dataset.act==="order")await db.collection("outof").add({text:txt.slice(0,80),added:new Date().toISOString()});await db.doc("pantry/"+id).delete()}catch(err){}});
+})();
+</script>
+
+<script>
+const BOOK=window.BOOK;
+(()=>{
+  const $=id=>document.getElementById(id), esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  let filter="all", cur=null, picked=new Set(), photos={}, db=null, assets=null;
+  (async()=>{try{db=await window.claude?.use?.("db")}catch(e){} try{assets=await window.claude?.use?.("assets")}catch(e){}
+    if(db)db.collection("photos").onSnapshot(q=>{photos={};q.docs.forEach(d=>photos[d.id]=d.data());window.renderBook();if(cur)fillDialog()});
+    if(cur)fillDialog()})();
+  const shown=()=>BOOK.filter(r=>!(window.__delRecipes||new Set()).has(r.id)).filter(r=>filter==="all"||(filter==="paprika"?r.source==="paprika":filter==="week"?(window.__weekPicks||new Set()).has(r.id):r.weight===filter));
+  const photoUrl=id=>photos[id]?.asset?"/_blob/"+photos[id].asset:null;
+  window.renderBook=()=>{const L=shown();$("bkcount").textContent=`${L.length} of ${BOOK.length} recipes`;
+    $("bklist").innerHTML=L.map(r=>`<div class="bkitem${picked.has(r.id)?" sel":""}"><input type="checkbox" data-pick="${r.id}" ${picked.has(r.id)?"checked":""} aria-label="Select ${esc(r.name)} for export">
+      <button class="bkopen" data-id="${r.id}">${photoUrl(r.id)?`<img src="${photoUrl(r.id)}" alt="">`:""}<b>${esc(r.name)}</b><span style="display:flex;gap:4px;flex-wrap:wrap"><span class="chip ${r.weight}">${r.weight}</span>${r.source==="new"?'<span class="chip new">new idea</span>':r.source==="paprika"?'<span class="chip core">from Paprika</span>':""}<span class="chip">${esc(r.total)}</span><span class="chip">serves ${window.__sv(r.id)}</span></span></button>${(window.__weekPicks||new Set()).has(r.id)?'<span class="chip ok" style="align-self:center">In this week\'s meals</span>':`<button class="linkbtn" data-add="${r.id}" style="align-self:center;white-space:nowrap">Add to this week</button>`}</div>`).join("")||'<p class="sub">The recipe book is empty for now.</p>';
+    const n=[...picked].length;$("bkexport").textContent=n?`Export ${n} selected to Paprika`:`Export all ${L.length} shown to Paprika`;$("bkexport").disabled=!n&&!L.length;$("bkclear").hidden=!n};
+  $("bkfilter").addEventListener("click",e=>{const b=e.target.closest("button[data-f]");if(!b)return;filter=b.dataset.f;[...$("bkfilter").children].forEach(x=>x.classList.toggle("on",x===b));window.renderBook()});
+  $("bklist").addEventListener("change",e=>{const id=e.target.dataset.pick;if(!id)return;e.target.checked?picked.add(id):picked.delete(id);window.renderBook()});
+  $("bklist").addEventListener("click",async e=>{const a=e.target.closest("[data-add]");if(a){a.disabled=true;const m=await window.addToWeek?.(a.dataset.add);$("bkcount").textContent=m||"";window.renderBook();return}const b=e.target.closest("[data-id]");if(b)window.openRecipe(b.dataset.id)});
+  $("bkclear").addEventListener("click",()=>{picked.clear();window.renderBook()});
+  function fillDialog(){const r=cur;$("rdTitle").textContent=r.name;
+    $("rdMeta").innerHTML=`<span class="chip ${r.weight}">${r.weight}</span><span class="chip">Prep ${esc(r.prep)}</span><span class="chip">Cook ${esc(r.cook)}</span><span class="chip">Total ${esc(r.total)}</span><span class="qty" style="display:inline-flex;align-items:center;gap:6px;font-size:13px">Serves <button type="button" id="rdSvDown" aria-label="Fewer serves" ${window.__servesLocked?.(r.id)?"disabled":""}>−</button><b>${window.__sv(r.id)}</b><button type="button" id="rdSvUp" aria-label="More serves" ${window.__servesLocked?.(r.id)?"disabled":""}>+</button>${window.__sv(r.id)!==r.serves?`<span class="count">(recipe is for ${r.serves})</span>`:""}</span>`;
+    const u=photoUrl(r.id);$("rdPhoto").innerHTML=u?`<img src="${u}" alt="Photo of ${esc(r.name)}"><button class="linkbtn" id="rdPhotoBtn">Replace photo</button>`:(assets?`<button class="btn" id="rdPhotoBtn">Add a photo of this meal</button>`:"");
+    $("rdIng").innerHTML=r.amounts.map(a=>`<li>${esc(window.__scaleLine(a,window.__fx(r.id)))}</li>`).join("");
+    $("rdOptWrap").hidden=!r.optional?.length;{const ks=r.optkeys||[];const vs=window.__vegState?.(r.id);const ok=ks.length===(r.optional||[]).length&&vs;
+      $("rdOpt").innerHTML=(r.optional||[]).map((a,ix)=>ok?`<li style="list-style:none;margin-left:-18px"><label style="display:flex;gap:8px;align-items:flex-start;cursor:pointer"><input type="checkbox" data-vk="${esc(ks[ix])}" ${vs.has(ks[ix])?"checked":""} ${vs.locked?"disabled":""} style="margin-top:3px"><span>${esc(window.__scaleLine(a,window.__fx(r.id)))}</span></label></li>`:`<li>${esc(window.__scaleLine(a,window.__fx(r.id)))}</li>`).join("")
+        +(ok?`<li style="list-style:none;margin-left:-18px" class="count">${vs.inWeek?"Ticks here match this week's ingredients list, and I'll remember them for next time.":"I'll remember your ticks and add these whenever this recipe comes up."}</li>`:"")}
+    $("rdMethod").innerHTML=r.method.map(m=>`<li>${esc(m)}</li>`).join("");
+    $("rdNotes").innerHTML=notes(r).split("\n").map(esc).join("<br>")+(r.origin?`<br>Source: ${r.origin_url?`<a href="${esc(r.origin_url)}" target="_blank" rel="noopener">${esc(r.origin)}</a>`:esc(r.origin)}`:"")}
+  window.openRecipe=id=>{cur=BOOK.find(r=>r.id===id);if(!cur)return;$("rdMsg").textContent="";fillDialog();const d=$("rdlg");d.showModal?d.showModal():d.setAttribute("open","")};
+  $("rdAdd").addEventListener("click",async()=>{if(!cur)return;$("rdMsg").textContent="Adding…";$("rdMsg").textContent=await window.addToWeek?.(cur.id)||"";window.renderBook?.()});
+  $("rdOpt").addEventListener("change",e=>{const k=e.target.dataset.vk;if(!k||!cur)return;window.__vegSet?.(cur.id,k,e.target.checked)});
+  window.__rdRefresh=()=>{const d=$("rdlg");if(cur&&d&&d.open)fillDialog()};
+  $("rdMeta").addEventListener("click",e=>{if(!cur)return;if(e.target.id==="rdSvUp")window.__setServes?.(cur.id,window.__sv(cur.id)+1);if(e.target.id==="rdSvDown")window.__setServes?.(cur.id,window.__sv(cur.id)-1)});
+  $("rdClose").addEventListener("click",()=>$("rdlg").close());
+  $("rdlg").addEventListener("click",e=>{if(e.target===$("rdlg"))$("rdlg").close()});
+  // photos
+  $("rdPhoto").addEventListener("click",e=>{if(e.target.id==="rdPhotoBtn")$("rdFile").click()});
+  $("rdFile").addEventListener("change",async e=>{const f=e.target.files[0];e.target.value="";if(!f||!assets||!db||!cur)return;$("rdMsg").textContent="Uploading photo…";
+    try{const blob=await shrink(f);const up=await assets.upload(blob,{type:"image/jpeg"});const old=photos[cur.id]?.asset;
+      await db.doc("photos/"+cur.id).set({asset:up.id,updated:new Date().toISOString()});if(old)assets.delete(old).catch(()=>{});$("rdMsg").textContent="Photo saved. It'll be included in Paprika exports."}
+    catch(err){$("rdMsg").textContent=err?.code==="quota_exceeded"?"Photo storage is full":"Couldn't save the photo - try a smaller image"}});
+  async function shrink(file){const img=await createImageBitmap(file);const k=Math.min(1,1400/Math.max(img.width,img.height));const c=document.createElement("canvas");c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext("2d").drawImage(img,0,0,c.width,c.height);return await new Promise(r=>c.toBlob(r,"image/jpeg",.85))}
+  // text formats
+  const notes=r=>[`Serves ${r.serves} · ${r.weight} meal`,r.serves>=4?`Leftovers: about ${r.serves-2} extra serves for lunches if 2 are eating.`:"",r.extras?.length?`From the pantry: ${r.extras.join(", ")}`:"",r.shares?.length?`Shares ingredients with: ${r.shares.join(", ")}`:"","From Claude's Kitchen"].filter(Boolean).join("\n");
+  const ingText=r=>r.amounts.join("\n")+(r.optional?.length?"\n\nOptional extras:\n"+r.optional.join("\n"):"");
+  const clip=r=>`${r.name}\n\nServings: ${r.serves}\nPrep time: ${r.prep}\nCook time: ${r.cook}\nTotal time: ${r.total}\n\nIngredients\n${ingText(r)}\n\nDirections\n${r.method.join("\n\n")}\n\nNotes\n${notes(r)}\n`;
+  $("rdCopy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText(clip(cur));$("rdMsg").textContent="Copied. In Paprika: new recipe, then the clipboard button, and assign each part."}catch(e){$("rdMsg").textContent="Copy isn't available here - select the text instead"}});
+  // Paprika export
+  const CRC=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return b=>{let c=~0;for(let i=0;i<b.length;i++)c=t[(c^b[i])&255]^(c>>>8);return(~c)>>>0}})();
+  async function gzip(str){const s=new Blob([str]).stream().pipeThrough(new CompressionStream("gzip"));return new Uint8Array(await new Response(s).arrayBuffer())}
+  async function shaHex(str){const h=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(str));return[...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,"0")).join("")}
+  async function stableUid(id){const h=(await shaHex("pantry-rhythm:"+id)).toUpperCase();return`${h.slice(0,8)}-${h.slice(8,12)}-5${h.slice(13,16)}-A${h.slice(17,20)}-${h.slice(20,32)}`}
+  function zip(files){const enc=new TextEncoder(),parts=[],central=[];let off=0;
+    for(const f of files){const name=enc.encode(f.name),crc=CRC(f.data),h=new DataView(new ArrayBuffer(30));
+      h.setUint32(0,0x04034b50,true);h.setUint16(4,20,true);h.setUint16(6,0x0800,true);h.setUint32(14,crc,true);h.setUint32(18,f.data.length,true);h.setUint32(22,f.data.length,true);h.setUint16(26,name.length,true);
+      parts.push(new Uint8Array(h.buffer),name,f.data);
+      const c=new DataView(new ArrayBuffer(46));c.setUint32(0,0x02014b50,true);c.setUint16(4,20,true);c.setUint16(6,20,true);c.setUint16(8,0x0800,true);c.setUint32(16,crc,true);c.setUint32(20,f.data.length,true);c.setUint32(24,f.data.length,true);c.setUint16(28,name.length,true);c.setUint32(42,off,true);
+      central.push(new Uint8Array(c.buffer),name);off+=30+name.length+f.data.length}
+    const cs=central.reduce((a,b)=>a+b.length,0),e=new DataView(new ArrayBuffer(22));e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,cs,true);e.setUint32(16,off,true);
+    return new Blob([...parts,...central,new Uint8Array(e.buffer)],{type:"application/zip"})}
+  async function photoData(id){const u=photoUrl(id);if(!u)return null;try{const b=await (await fetch(u)).blob();return await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(String(fr.result).split(",")[1]);fr.readAsDataURL(b)})}catch(e){return null}}
+  async function paprika(r){const pd=await photoData(r.id);
+    const o={uid:r.paprika_uid||await stableUid(r.id),name:r.name,ingredients:ingText(r),directions:r.method.join("\n\n"),servings:String(r.serves),prep_time:r.prep,cook_time:r.cook,total_time:r.total,
+      notes:notes(r)+(r.paprika_notes?"\n\n"+r.paprika_notes:""),source:r.origin||"Claude's Kitchen",source_url:r.origin_url||"",description:"",nutritional_info:"",difficulty:"",rating:0,categories:["Dinner",r.weight[0].toUpperCase()+r.weight.slice(1),"Claude's Kitchen"],
+      photo:pd?r.id+".jpg":null,photo_data:pd,photo_hash:pd?await shaHex(pd):null,image_url:null,created:new Date().toISOString().replace("T"," ").slice(0,19),hash:""};
+    o.hash=await shaHex(JSON.stringify({...o,created:""}));return o}
+  window.exportRecipes=async(list,msgEl)=>{if(!list.length){msgEl.textContent="Nothing to export";return}msgEl.textContent=`Preparing ${list.length} recipe${list.length>1?"s":""}…`;
+    try{const dl=await window.claude?.use?.("downloads");if(!dl){msgEl.textContent="Export needs the page open on claude.ai";return}
+      const files=[];for(const r of list)files.push({name:r.name.replace(/[\\/:*?"<>|]/g,"")+".paprikarecipe",data:await gzip(JSON.stringify(await paprika(r)))});
+      const day=new Date().toISOString().slice(0,10);
+      const fname=(list.length===1?list[0].name.replace(/[\\/:*?"<>|]/g,""):`Claude's Kitchen ${list.length} recipes ${day}`)+".paprikarecipes.zip";
+      await dl.save({filename:fname,data:zip(files)});msgEl.textContent=`Saved ${list.length} recipe${list.length>1?"s":""} as "${fname}". See "How to import" below.`}
+    catch(e){msgEl.textContent=e?.code==="declined"?"Export cancelled":e?.code==="rate_limited"?"A save is already open - finish that first":e?.code==="unavailable"||e?.code==="not_granted"?"Downloads aren't available in this view":"Export failed - try again"}};
+  $("rdExport").addEventListener("click",()=>cur&&window.exportRecipes([cur],$("rdMsg")));
+  $("bkexport").addEventListener("click",()=>window.exportRecipes(picked.size?BOOK.filter(r=>picked.has(r.id)):shown(),$("bkmsg")));
+  window.renderBook();
+})();
+</script>
+
+<script>
+(()=>{
+  const COOKS=__COOKS__; window.__COOKS=COOKS; const EXTRA=["Leftovers","Eating out","Takeaway"];
+  const $=id=>document.getElementById(id), esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const iso=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  const days=[...Array(7)].map((_,i)=>{const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+i);return d});
+  let db=null, ml=null, mla=null, S={};
+  let madd2=null;const choices=()=>{const live=window.__mlChosenIds?.();const ids=new Set(live||(mla&&ml&&mla.date===ml.date?(mla.recipes||[]):[]));const B=window.BOOK||[];const pool=[...(ml?.options||[]),...((madd2&&ml&&madd2.date===ml.date?madd2.options:[])||[])];const o=[...ids].map(id=>{const x=pool.find(y=>y.id===id)||B.find(y=>y.id===id);return x?{id,name:x.name}:null}).filter(Boolean);return o};
+  const rid=s=>{if(!s||!s.name)return"";const b=window.BOOK||[];return (s.recipe&&b.some(r=>r.id===s.recipe))?s.recipe:(b.find(r=>r.name===s.name)||{}).id||""};
+  function render(){
+    const ch=choices(), today=iso(days[0]);
+    $("sched").innerHTML=days.map((d,i)=>{const k=iso(d),s=S[k]||{};const opts=ch.slice();if(s.name&&!opts.some(o=>o.name===s.name)&&!EXTRA.includes(s.name))opts.push({id:s.recipe||"",name:s.name});
+      return `<div class="srow${i===0?" today":""}"><span class="d">${i===0?"Tonight":d.toLocaleDateString("en-AU",{weekday:"short"})} ${d.getDate()}</span>
+      <div class="pick"><select data-k="${k}" aria-label="Dinner for ${k}" ${db?"":"disabled"}><option value="">— not planned —</option>${opts.map(o=>`<option value="${esc(o.name)}" data-id="${esc(o.id)}" ${s.name===o.name?"selected":""}>${esc(o.name)}</option>`).join("")}<optgroup label="Other">${EXTRA.map(x=>`<option ${s.name===x?"selected":""}>${x}</option>`).join("")}</optgroup></select>${rid(s)?`<a class="rl" role="button" tabindex="0" data-r="${esc(rid(s))}">View recipe</a>`:""}</div>
+      <span class="cooks">${COOKS.map(c=>`<button data-k="${k}" data-c="${c}" class="${s.cook===c?"on":""}" aria-pressed="${s.cook===c}" ${db?"":"disabled"}>${c}</button>`).join("")}</span></div>`}).join("");
+    const t=S[today];
+    $("tonight").innerHTML=t?.name?`${rid(t)?`<a class="rl" role="button" tabindex="0" data-r="${esc(rid(t))}" style="color:inherit;text-decoration:underline;cursor:pointer">${esc(t.name)}</a>`:esc(t.name)}<small>${t.cook?esc(t.cook)+" is cooking this evening":"Who's cooking, if I may ask?"}</small>`:`Nothing planned for tonight, I'm afraid<small>${ch.length?"Do pick something from this week's meals below":"Once this week's meals are approved, we can plan the evenings"}</small>`;
+  }
+  const save=(k,patch)=>{S[k]={...(S[k]||{}),...patch};render();db?.doc("schedule/"+k).set({...S[k],updated:new Date().toISOString()}).catch(()=>{})};
+  $("sched").addEventListener("change",e=>{const s=e.target.closest("select[data-k]");if(!s)return;const o=s.selectedOptions[0];save(s.dataset.k,{name:s.value,recipe:o?.dataset.id||""})});
+  const openR=e=>{const a=e.target.closest("a[data-r]");if(!a)return;e.preventDefault();window.openRecipe&&window.openRecipe(a.dataset.r)};
+  $("sched").addEventListener("click",openR);$("tonight").addEventListener("click",openR);
+  $("sched").addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" ")openR(e)});
+  $("sched").addEventListener("click",e=>{const b=e.target.closest("button[data-c]");if(!b)return;const k=b.dataset.k;save(k,{cook:S[k]?.cook===b.dataset.c?"":b.dataset.c})});
+  render();
+  (async()=>{try{db=await window.claude?.use?.("db")}catch(e){}
+    if(!db){$("tonight").innerHTML="Open this page on claude.ai to plan dinners";return}
+    db.doc("weekly/meals").onSnapshot(s=>{ml=s.exists?s.data():null;render()});
+    db.doc("weekly/meals_added").onSnapshot(s=>{madd2=s.exists?s.data():null;render()});
+    db.doc("weekly/meals_approval").onSnapshot(s=>{mla=s.exists?s.data():null;render()});
+    window.__schedRender=()=>{if(!document.activeElement||!document.activeElement.closest||!document.activeElement.closest("#sched"))render()};
+    db.collection("schedule").onSnapshot(q=>{S={};q.docs.forEach(d=>S[d.id]=d.data());render()});
+  })();
+})();
+</script>
+
+<script>
+(()=>{const ids=[...document.querySelectorAll("section")];const start=ids.findIndex(s=>/Recipe book|Your staples/.test(s.querySelector("h2")?.textContent||""));if(start<0)return;
+  let st={};try{st=JSON.parse(localStorage.getItem("ck_open")||"{}")}catch(e){}
+  ids.slice(start).forEach((s,i)=>{const h=s.querySelector(":scope>h2,:scope>.weekhead>h2");if(!h)return;const key=s.id||("s"+i);
+    const b=document.createElement("button");b.className="colbtn";b.type="button";b.innerHTML=h.innerHTML;h.textContent="";h.appendChild(b);
+    const set=open=>{s.classList.toggle("coll",!open);b.setAttribute("aria-expanded",open)};set(!!st[key]);
+    b.addEventListener("click",()=>{const open=s.classList.contains("coll");set(open);st[key]=open;try{localStorage.setItem("ck_open",JSON.stringify(st))}catch(e){}})})})();
+</script>
+
+<script>
+// ---- weekly shop flow: Specials → Core → Meals → Extras → Review & send ----
+(async()=>{
+  const $=id=>document.getElementById(id), esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const TRIGGER="__CART_TRIGGER__", SERVER="Claude Code Remote";
+  const STEPS=[
+    {t:"Specials",h:"This week's genuine specials on things you usually buy. Tick what you'd like and untick anything you don't need.",show:["week"],f:["On special","Goes with this week's specials"],e:"Nothing you usually buy is on special this week."},
+    {t:"Core items",h:"Your weekly regulars, drinks, and anything due for a re-buy. Adjust quantities or untick what's still in the cupboard.",show:["week"],f:["Weekly core","Drinks","Due for a re-buy"],e:"No regulars are due this week."},
+    {t:"Meals",h:"Choose this week's dinners and untick ingredients you already have. You can add any recipe from the recipe book below.",show:["meals","book"]},
+    {t:"Extra items",h:"Anything you've run out of. Add new items here; I'll match them to your usual product, or pick the best match when I fill the cart.",show:["outof","week"],f:["From your out-of list"],e:"Nothing matched from your out-of list yet. Anything you add above goes in when I fill the cart."},
+    {t:"Review & send",h:"Check everything below, then press Confirm complete. I'll add it all to your Woolworths cart; checkout stays with you.",show:["flReview"]}];
+  const MOVE=["outof","week","meals","book"];
+  MOVE.forEach(id=>{const n=$(id);if(n)$("flBody").appendChild(n)});
+  let db=null;try{db=await window.claude?.use?.("db")}catch(e){}
+  let flow=null, stage=0, busy=false, msg="";
+  const wk=()=>window.__wk||"";
+  const cur=()=>flow&&flow.date===wk()?flow:null;
+  const money=n=>"$"+(+n||0).toFixed(2);
+  const saveStage=n=>{const f=cur();flow={...(f||{status:"in_progress"}),date:wk(),stage:n};if(db&&wk())db.doc("weekly/flow").set(flow).catch(()=>{})};
+  function go(n,scroll){if(n<0||n>4||busy||cur()?.status==="placed")return;stage=n;saveStage(n);apply();if(scroll)$("flow").scrollIntoView({behavior:"smooth",block:"start"})}
+  function apply(){
+    const s=STEPS[stage];
+    [...$("flSteps").children].forEach((li,i)=>{li.className=i===stage?"cur":i<stage?"done":"";const b=li.querySelector("button");if(i===stage)b.setAttribute("aria-current","step");else b.removeAttribute("aria-current")});
+    $("flTitle").textContent=`Step ${stage+1} of 5 · ${s.t}`;$("flHelp").textContent=s.h;
+    MOVE.concat(["flReview"]).forEach(id=>{const n=$(id);if(!n)return;const on=s.show.includes(id);n.hidden=!on;if(on&&id!=="book")n.classList.remove("coll")});
+    window.__wkFilter=s.f||null;window.__wkEmptyMsg=s.e||"";
+    window.__wkRender?.();window.__mlRender?.();update();
+  }
+  function states(){
+    const a=window.__wkInfo?.()||{}, m=window.__mlInfo?.()||{};
+    const ast=a.appr?.date===wk()?a.appr.status:null, mst=m.mla?.date===wk()?m.mla.status:null;
+    return {ast,mst,added:ast==="added"||mst==="added",ordered:ast==="ordered"||mst==="ordered",confirmed:cur()?.status==="confirmed",placed:cur()?.status==="placed",f:cur(),prop:a.prop};
+  }
+  function update(){
+    const S=states();
+    $("flow").classList.toggle("locked",S.placed);
+    $("flStatus").textContent=S.placed?"Order placed ✓ · locked until delivery is checked":S.ordered?"Ordered ✓":S.added?"In your cart ✓ · checkout is yours":S.confirmed?(S.f.fired?"Confirmed · Claude is filling your cart":"Confirmed · waiting for Claude"):`In progress · step ${stage+1} of 5`;
+    $("flStatus").className="chip"+(S.placed||S.ordered||S.added||S.confirmed?" ok":"");
+    $("flPrev").disabled=stage===0||busy||S.placed;$("flPrev").hidden=S.placed;
+    $("flNext").hidden=stage===4||S.placed;$("flNext").disabled=busy;$("flNext").textContent=stage<4?`Next: ${STEPS[stage+1].t} →`:"";
+    $("flPos").textContent=`${stage+1} / 5`;
+    if(stage===4)review(S);
+  }
+  function group(title,items,step){
+    if(!items.length)return `<details><summary><span>${esc(title)} · none</span><button class="linkbtn edit" data-go="${step}">Edit</button></summary></details>`;
+    const tot=items.reduce((a,x)=>a+x.price*x.qty,0);
+    return `<details><summary><span>${esc(title)} · ${items.length} · ${money(tot)}</span><button class="linkbtn edit" data-go="${step}">Edit</button></summary><ul>${items.map(x=>`<li><span>${esc(x.name)} ${x.unit==="kg"?`× ${x.qty} kg`:x.qty>1?`× ${x.qty}`:""}</span><span>${money(x.price*x.qty)}</span></li>`).join("")}</ul></details>`;
+  }
+  function review(S){
+    const st=window.__wkPriced?.()||[], ml=window.__mlLines?.()||[], meals=window.__mlChosen?.()||[];
+    const sp=st.filter(x=>x.bucket==="On special"||x.bucket==="Goes with this week's specials"), co=st.filter(x=>["Weekly core","Drinks","Due for a re-buy"].includes(x.bucket)), ex=st.filter(x=>x.bucket==="From your out-of list");
+    const total=st.concat(ml).reduce((a,x)=>a+(x.price||0)*x.qty,0), n=st.length+ml.length;
+    const locked=S.confirmed||S.added||S.ordered||S.placed;
+    const placeBtn=`<button class="btn${S.added||S.confirmed?" primary":""}" id="flPlaced">I've placed the order</button>`;
+    let act="";
+    if(!db)act=`<p class="rvmsg">Open this page on claude.ai to confirm the shop.</p>`;
+    else if(S.placed)act=`<div class="rvplaced"><b>Order placed${S.f.placedBy?" by "+esc(S.f.placedBy):""}</b><span class="sub" style="margin:0">Placed ${esc(new Date(S.f.placedAt).toLocaleString("en-AU",{weekday:"short",day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}))}. This week is closed. Once I've fetched the order from Woolworths, the page resets and next week's list begins.</span><span><button class="linkbtn" id="flUnplace">Undo, I haven't actually ordered</button></span></div>`;
+    else if(S.ordered)act=`<p class="rvmsg">This week's order has been placed. Next week's list arrives Friday morning.</p>`;
+    else if(S.added)act=`<p class="rvmsg">Everything is in your Woolworths cart. Checkout is yours whenever you're ready, and press the button below once you have.</p><div class="rvact">${placeBtn}</div>`;
+    else if(S.confirmed)act=`<div class="rvact">${S.f.fired?"":`<button class="btn primary" id="flSend">Send to Claude again</button>`}<button class="btn" id="flReopen">Reopen to make changes</button>${placeBtn}</div>`;
+    else act=`<div class="rvact"><button class="btn primary" id="flConfirm" ${n&&!busy?"":"disabled"}>Confirm complete</button>${placeBtn}</div>${n?"":`<p class="rvmsg">Nothing is ticked yet. Go back and choose some items or meals.</p>`}`;
+    $("flReview").innerHTML=(S.prop?"":`<p class="sub">This week's list isn't ready yet. I build it on Friday morning.</p>`)
+      +group("Specials",sp,0)+group("Core items",co,1)
+      +`<details><summary><span>Meals · ${meals.length} dinners · ${ml.length} ingredients · ${money(ml.reduce((a,x)=>a+(x.price||0)*x.qty,0))}</span><button class="linkbtn edit" data-go="2">Edit</button></summary>${meals.length?`<p class="sub" style="margin:8px 0 0">${meals.map(esc).join(" · ")}</p><ul>${ml.map(x=>`<li><span>${esc(x.name)} ${x.qty>1?`× ${x.qty}`:""}</span><span>${money((x.price||0)*x.qty)}</span></li>`).join("")}</ul>`:""}</details>`
+      +group("Extra items",ex,3)
+      +`<div class="rvtotal"><span>${n} products</span><span>about ${money(total)}</span></div>`
+      +(S.prop?.cart_existing?`<p class="sub" style="margin:0">Your cart already has ${S.prop.cart_existing} other line${S.prop.cart_existing>1?"s":""}; I'll leave those alone.</p>`:"")
+      +act+(msg?`<p class="rvmsg" role="status">${esc(msg)}</p>`:"");
+    $("flReview").querySelectorAll("details").forEach(d=>{if(!locked)d.open=false});
+  }
+  async function fire(){
+    let mcp=null;try{mcp=await window.claude?.use?.("mcp")}catch(e){}
+    if(!mcp){msg="Saved. This view can't reach Claude directly, so just tell Claude \"push to cart\" in chat.";return}
+    msg="Sending to Claude…";update();
+    try{
+      await mcp.callTool(SERVER,"fire_trigger",{trigger_id:TRIGGER,text:`Confirmed on the page for the week of ${wk()} at ${new Date().toLocaleString("en-AU")}.`});
+      try{await db.doc("weekly/flow").update({fired:true,firedAt:new Date().toISOString()})}catch(e){}
+      msg="Sent. Claude is adding everything to your Woolworths cart now (your computer needs to be on). You'll get a notification when it's done.";
+    }catch(e){const c=e?.code;
+      msg=c==="needs_reauth"?"Saved, but the Claude Code Remote connector needs reconnecting (claude.ai Settings → Connectors). Or tell Claude \"push to cart\" in chat."
+        :c==="server_not_connected"||c==="selection_required"||c==="server_not_found"?"Saved, but the Claude Code Remote connector isn't available in this view. Tell Claude \"push to cart\" in chat."
+        :c==="not_in_manifest"||c==="not_granted"||c==="capability_disabled"||c==="capability_removed"||c==="blocked_by_policy"||c==="approval_required"||c==="consent_required"?"Saved, but this page wasn't allowed to start Claude. Press Send to Claude again and allow it, or tell Claude \"push to cart\" in chat."
+        :c==="server_unavailable"||c==="upstream_error"||c==="cancelled"?"Saved, but I couldn't confirm Claude got the message. If no notification arrives in a few minutes, press Send to Claude again."
+        :c==="tool_error"?"Saved, but Claude's cart task refused to start ("+(e.message||"no reason given")+"). Tell Claude \"push to cart\" in chat."
+        :"Saved, but sending failed. Tell Claude \"push to cart\" in chat.";}
+  }
+  async function confirmShop(){
+    if(!db||busy)return;busy=true;msg="Saving…";update();
+    try{
+      if((window.__wkChosen?.()||[]).length)await window.__wkSave("approved");
+      if((window.__mlChosen?.()||[]).length)await window.__mlSave("approved");
+      flow={date:wk(),stage:4,status:"confirmed",confirmedAt:new Date().toISOString(),fired:false};
+      await db.doc("weekly/flow").set(flow);
+      await fire();
+    }catch(e){msg="Couldn't save. Check your connection and press Confirm complete again."}
+    busy=false;update();
+  }
+  async function reopen(){
+    if(!db||busy)return;busy=true;msg="";update();
+    try{const a=window.__wkInfo?.(),m=window.__mlInfo?.();
+      if(a?.prop&&a.appr?.date===wk()&&a.appr.status==="approved")await window.__wkSave("draft");
+      if(m?.ml&&m.mla?.date===wk()&&m.mla.status==="approved")await window.__mlSave("draft");
+      flow={date:wk(),stage:4,status:"in_progress"};await db.doc("weekly/flow").set(flow);
+      msg="Reopened. If Claude had already started, check the cart before confirming again.";
+    }catch(e){msg="Couldn't reopen. Try again."}
+    busy=false;update();
+  }
+  let from=(window.__COOKS||[])[0]||"";try{const f=localStorage.getItem("ck_from");if(f)from=f}catch(e){}
+  async function markPlaced(){
+    if(!db||busy)return;busy=true;msg="Closing this week…";update();
+    try{const prev=cur()||{};flow={...prev,date:wk(),stage:4,status:"placed",placedAt:new Date().toISOString(),placedBy:from,prevStatus:prev.status||"in_progress"};
+      await db.doc("weekly/flow").set(flow);stage=4;msg="";apply()}
+    catch(e){msg="Couldn't save that. Check your connection and try again."}
+    busy=false;update()}
+  async function unplace(){
+    if(!db||busy)return;busy=true;update();
+    try{const f=cur()||{};const back=f.prevStatus&&f.prevStatus!=="placed"?f.prevStatus:"in_progress";const nf={...f,status:back};delete nf.placedAt;delete nf.placedBy;delete nf.prevStatus;flow=nf;
+      await db.doc("weekly/flow").set(flow);msg="Unlocked. The week is open again."}
+    catch(e){msg="Couldn't unlock. Try again."}
+    busy=false;update()}
+  const arm=(b,label,fn)=>{if(!b.dataset.armed){b.dataset.armed="1";const t=b.textContent;b.textContent=label;setTimeout(()=>{if(b.isConnected){delete b.dataset.armed;b.textContent=t}},5000);return}fn()};
+  $("flSteps").addEventListener("click",e=>{const b=e.target.closest("button[data-st]");if(b)go(+b.dataset.st,false)});
+  $("flPrev").addEventListener("click",()=>go(stage-1,true));
+  $("flNext").addEventListener("click",()=>go(stage+1,true));
+  $("flReview").addEventListener("click",async e=>{
+    const g=e.target.closest("[data-go]");if(g){e.preventDefault();go(+g.dataset.go,true);return}
+    if(e.target.closest("#flConfirm"))return confirmShop();
+    if(e.target.closest("#flReopen"))return reopen();
+    {const b=e.target.closest("#flPlaced");if(b)return arm(b,"Confirm: order placed?",markPlaced)}
+    {const b=e.target.closest("#flUnplace");if(b)return arm(b,"Confirm unlock?",unplace)}
+    if(e.target.closest("#flSend")){if(busy)return;busy=true;update();await fire();busy=false;update()}
+  });
+  window.__flUpdate=()=>{const f=cur();if(f?.status==="placed"&&stage!==4){stage=4;apply();return}if(f&&typeof f.stage==="number"&&f.stage!==stage){stage=f.stage;apply();return}update()};
+  apply();
+  if(db)db.doc("weekly/flow").onSnapshot(s=>{flow=s.exists?s.data():null;window.__flUpdate()});
+})();
+</script>
+
+<script>
+// ---- notes for Claude (shared db: notes, recipe_notes) ----
+(()=>{
+  const $=id=>document.getElementById(id), esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const COOKS=window.__COOKS||[];let db=null, notes=[], rnotes={}, shown=30, from=COOKS[0]||"", cur=null, saveT=null, saving=false;
+  try{const f=localStorage.getItem("ck_from");if(COOKS.includes(f))from=f}catch(e){}
+  $("cnFrom").innerHTML=COOKS.map(c=>`<button type="button" data-from="${esc(c)}">${esc(c)}</button>`).join("");$("cnFrom").hidden=COOKS.length<2;
+  const setFrom=f=>{from=f;[...$("cnFrom").children].forEach(b=>{const on=b.dataset.from===f;b.classList.toggle("on",on);b.setAttribute("aria-pressed",on)});try{localStorage.setItem("ck_from",f)}catch(e){}};
+  setFrom(from);
+  $("cnFrom").addEventListener("click",e=>{const b=e.target.closest("button[data-from]");if(b)setFrom(b.dataset.from)});
+  const nid=p=>p+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+  const when=iso=>{const d=new Date(iso);if(isNaN(d))return"";const t=new Date();const same=d.toDateString()===t.toDateString();
+    return (same?"Today":d.toLocaleDateString("en-AU",{weekday:"short",day:"numeric",month:"short"}))+" "+d.toLocaleTimeString("en-AU",{hour:"numeric",minute:"2-digit"}).replace(" ","")};
+  const recipeName=id=>((window.BOOK||[]).find(r=>r.id===id)||{}).name;
+  const stChip=n=>n.status==="done"?'<span class="chip ok">Seen to</span>':n.status==="declined"?'<span class="chip sp">Declined</span>':'<span class="chip">Awaiting tonight\'s rounds</span>';
+  function render(){
+    const log=$("cnLog");const atBottom=log.scrollHeight-log.scrollTop-log.clientHeight<40;
+    const L=[...notes].sort((a,b)=>String(a.created).localeCompare(String(b.created)));
+    const pend=L.filter(n=>n.kind!=="helper"&&(n.status||"pending")==="pending").length;
+    $("cnStatus").textContent=pend?`${pend} note${pend>1?"s":""} waiting`:"All attended to";$("cnStatus").className="chip"+(pend?" sp":" ok");
+    if(!L.length){log.innerHTML='<p class="cnempty">No notes as yet. The household has, apparently, nothing to say. Do write when the urge strikes.</p>';return}
+    const V=L.slice(-shown);
+    log.innerHTML=(L.length>V.length?`<button type="button" class="linkbtn cnmore" id="cnMore">Show ${Math.min(30,L.length-V.length)} earlier</button>`:"")+V.map(n=>{
+      if(n.kind==="helper")return `<div class="cnmsg helper"><span class="who">Claude · ${esc(when(n.created))}</span><div class="txt">${esc(n.text)}</div></div>`;
+      const st=n.status||"pending";
+      const rec=n.kind==="recipe"?`<button type="button" class="rlink" data-open="${esc(n.recipe)}">${esc(recipeName(n.recipe)||n.recipeName||"a recipe")}</button>`:"";
+      const body=n.kind==="recipe"?(n.text?`Note on ${rec}:\n`:`Cleared the note on ${rec}.`)+esc(n.text||""):esc(n.text);
+      return `<div class="cnmsg us"><span class="who">${esc(n.from||"You")} · ${esc(when(n.updated||n.created))} ${stChip(n)}${st==="pending"&&n.kind!=="recipe"?`<button type="button" class="linkbtn" data-withdraw="${esc(n.id)}">Withdraw</button>`:""}</span><div class="txt">${body}</div></div>`}).join("");
+    if(atBottom||render.first!==true){log.scrollTop=log.scrollHeight;render.first=true}
+  }
+  $("cnLog").addEventListener("click",async e=>{
+    if(e.target.id==="cnMore"){shown+=30;const log=$("cnLog");const h=log.scrollHeight;render();log.scrollTop=log.scrollHeight-h;return}
+    const o=e.target.closest("[data-open]");if(o){window.openRecipe?.(o.dataset.open);return}
+    const w=e.target.closest("[data-withdraw]");if(!w||!db)return;
+    if(!w.dataset.armed){w.dataset.armed="1";w.textContent="Confirm withdraw?";setTimeout(()=>{if(w.isConnected){delete w.dataset.armed;w.textContent="Withdraw"}},5000);return}
+    w.disabled=true;try{await db.doc("notes/"+w.dataset.withdraw).delete()}catch(err){w.disabled=false;$("cnMsg").textContent="Couldn't withdraw that note. Try again."}});
+  $("cnText").addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.metaKey||e.ctrlKey)){e.preventDefault();$("cnForm").requestSubmit()}});
+  $("cnForm").addEventListener("submit",async e=>{e.preventDefault();const t=$("cnText").value.trim();if(!t)return;
+    if(!db){$("cnMsg").textContent="Open this page on claude.ai to leave a note.";return}
+    $("cnSend").disabled=true;$("cnMsg").textContent="Leaving it on the silver tray…";const id=nid("n_");
+    try{await db.doc("notes/"+id).set({kind:"note",from,text:t,status:"pending",created:new Date().toISOString()});$("cnText").value="";$("cnMsg").textContent="Noted. I'll see to it this evening.";$("cnLog").scrollTop=1e9}
+    catch(err){$("cnMsg").textContent="Couldn't save your note. Try again."}
+    $("cnSend").disabled=false});
+
+  // ---- per-recipe user notes ----
+  const box=$("rdUser"), umsg=$("rdUserMsg");
+  const fillBox=()=>{if(!cur||document.activeElement===box)return;box.value=rnotes[cur]?.text||"";umsg.textContent=rnotes[cur]?.updated?`Last changed ${when(rnotes[cur].updated)}${rnotes[cur].from?" by "+rnotes[cur].from:""}`:""};
+  const wrapOpen=()=>{const orig=window.openRecipe;if(!orig||orig.__cn)return;const f=id=>{commit();orig(id);cur=id;box.disabled=!db;fillBox()};f.__cn=true;window.openRecipe=f};
+  wrapOpen();setTimeout(wrapOpen,0);
+  async function commit(){clearTimeout(saveT);if(!cur||!db||saving)return;const id=cur,t=box.value.trim(),old=(rnotes[id]?.text||"").trim();if(t===old)return;
+    saving=true;umsg.textContent="Saving…";const now=new Date().toISOString();
+    try{await db.doc("recipe_notes/"+id).set({recipe:id,name:recipeName(id)||"",text:t,from,updated:now});
+      rnotes[id]={recipe:id,text:t,from,updated:now};
+      const p=notes.find(n=>n.kind==="recipe"&&n.recipe===id&&(n.status||"pending")==="pending");
+      if(p)await db.doc("notes/"+p.id).set({...Object.fromEntries(Object.entries(p).filter(([k])=>k!=="id")),text:t,from,updated:now});
+      else await db.doc("notes/"+nid("r_")).set({kind:"recipe",recipe:id,recipeName:recipeName(id)||"",from,text:t,status:"pending",created:now});
+      if(cur===id)umsg.textContent="Saved. I'll take note of it this evening."}
+    catch(e){if(cur===id)umsg.textContent="Couldn't save the note. Try again."}
+    saving=false;if(cur===id&&box.value.trim()!==(rnotes[id]?.text||""))saveT=setTimeout(commit,1500)}
+  box.addEventListener("input",()=>{clearTimeout(saveT);umsg.textContent="";saveT=setTimeout(commit,1500)});
+  box.addEventListener("blur",commit);
+  $("rdlg").addEventListener("close",()=>{commit()});
+
+  (async()=>{try{db=await window.claude?.use?.("db")}catch(e){}
+    if(!db){$("cnStatus").textContent="Offline";$("cnLog").innerHTML='<p class="cnempty">Open this page on claude.ai to read and leave notes.</p>';$("cnSend").disabled=true;box.disabled=true;return}
+    box.disabled=false;
+    db.collection("notes").onSnapshot(q=>{notes=q.docs.map(d=>({id:d.id,...d.data()}));render()});
+    db.collection("recipe_notes").onSnapshot(q=>{rnotes={};q.docs.forEach(d=>rnotes[d.id]=d.data());fillBox()});
+  })();
+})();
+</script>

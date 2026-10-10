@@ -1,0 +1,264 @@
+{
+ "_help": "Your household rules. Claude sets these up with you on first run; edit any time or ask Claude to change them. Group names come from item_ranking.csv (built from your own order history).",
+ "household_name": "Claude",
+ "timezone": "",
+ "location": {
+  "name": "",
+  "latitude": null,
+  "longitude": null
+ },
+ "core": {},
+ "never": [],
+ "alternatives": {},
+ "rotate": {},
+ "clusters": {},
+ "fresh_categories": [
+  "Fruit & Veg",
+  "Fruit & Vegetables",
+  "Meat",
+  "Poultry, Meat & Seafood",
+  "Seafood",
+  "Dairy",
+  "Dairy, Eggs & Fridge",
+  "Chilled",
+  "Bakery",
+  "Serviced Deli",
+  "Deli",
+  "Lunch Box",
+  "Dinner"
+ ],
+ "min_special_pct": 20,
+ "stockup_special_pct": 35,
+ "stockup_weeks": 6,
+ "stockup_max_multiple": 4,
+ "price_jump_pct": 50,
+ "cheaper_per_unit_pct": 10,
+ "meal_weather": {
+  "_help": "Dinner temperature = average 5pm-8pm forecast. Each meal gets a fit score per day (1 = ideal, 0 = poor). Hot days (max >= hot_day_max) push hearty meals down even if the evening cools.",
+  "hearty": [
+   [
+    18,
+    1.0
+   ],
+   [
+    21,
+    0.7
+   ],
+   [
+    24,
+    0.3
+   ],
+   [
+    99,
+    0.0
+   ]
+  ],
+  "medium": [
+   [
+    13,
+    0.5
+   ],
+   [
+    17,
+    0.8
+   ],
+   [
+    24,
+    1.0
+   ],
+   [
+    27,
+    0.6
+   ],
+   [
+    99,
+    0.3
+   ]
+  ],
+  "light": [
+   [
+    17,
+    0.2
+   ],
+   [
+    20,
+    0.4
+   ],
+   [
+    23,
+    0.7
+   ],
+   [
+    99,
+    1.0
+   ]
+  ],
+  "hot_day_max": 32,
+  "hot_day_hearty_cap": 0.2,
+  "hot_day_light_min": 1.0,
+  "rain_mm": 2,
+  "rain_bonus_hearty_medium": 0.1
+ },
+ "meal_seasons": {
+  "_help": "Southern-hemisphere seasons (swap months if you are in the north). weather_weight = how much the week's evening temperatures count (0-1); the rest comes from the season's preference. max_picks caps how many of each weight are pre-ticked.",
+  "summer": {
+   "months": [
+    12,
+    1,
+    2
+   ],
+   "weather_weight": 0.4,
+   "prefer": {
+    "light": 1.0,
+    "medium": 0.7,
+    "hearty": 0.2
+   },
+   "max_picks": {
+    "hearty": 1,
+    "medium": 3,
+    "light": 4
+   }
+  },
+  "autumn": {
+   "months": [
+    3,
+    4,
+    5
+   ],
+   "weather_weight": 0.85,
+   "prefer": {
+    "light": 0.7,
+    "medium": 0.8,
+    "hearty": 0.7
+   },
+   "max_picks": {
+    "hearty": 3,
+    "medium": 3,
+    "light": 3
+   }
+  },
+  "winter": {
+   "months": [
+    6,
+    7,
+    8
+   ],
+   "weather_weight": 0.4,
+   "prefer": {
+    "light": 0.3,
+    "medium": 0.7,
+    "hearty": 1.0
+   },
+   "max_picks": {
+    "hearty": 4,
+    "medium": 3,
+    "light": 1
+   }
+  },
+  "spring": {
+   "months": [
+    9,
+    10,
+    11
+   ],
+   "weather_weight": 0.85,
+   "prefer": {
+    "light": 0.7,
+    "medium": 0.8,
+    "hearty": 0.7
+   },
+   "max_picks": {
+    "hearty": 3,
+    "medium": 3,
+    "light": 3
+   }
+  }
+ },
+ "dinner_groups": [
+  "Beef stir-fry strips",
+  "Beef mince",
+  "Pork mince",
+  "Slow-cook beef",
+  "Lamb chops",
+  "Chicken breast",
+  "Chicken thigh fillets",
+  "Chicken thigh cutlets",
+  "Chicken drumsticks / maryland",
+  "Chicken burgers",
+  "Meatballs",
+  "Chorizo",
+  "Bacon / pancetta",
+  "Salmon",
+  "Recipe bases / seasoning mixes",
+  "Passata",
+  "Canned tomatoes",
+  "Tomato paste",
+  "Dried pasta",
+  "Fresh pasta",
+  "Gnocchi",
+  "Ravioli / tortellini",
+  "Microwave rice",
+  "Chicken stock",
+  "Beef stock",
+  "Coconut cream",
+  "Frozen chips",
+  "Frozen diced onions",
+  "Black beans",
+  "Garlic paste",
+  "Cream",
+  "Frozen spinach",
+  "Dumplings",
+  "Mashed potato",
+  "Stir-fry vegetables",
+  "Lamb mince"
+ ],
+ "_dinner_help": "Groups in dinner_groups are never proposed as staples; they only come in via chosen recipes.",
+ "staples_policy": {
+  "_help": "core items always; utility categories when due or on special; snacks only when on special at their usual rhythm; drinks when due or on special.",
+  "utility_categories": [
+   "Toiletries",
+   "Beauty",
+   "Household Cleaning",
+   "Cleaning & Maintenance",
+   "Health & Wellbeing",
+   "Health & Wellness",
+   "Pet Care",
+   "Home & Outdoor",
+   "Papergoods, Wraps & Bags"
+  ],
+  "snack_categories": [
+   "Biscuits & Snacks",
+   "Confectionery",
+   "Snacks & Confectionery",
+   "Drinks",
+   "Health Foods",
+   "Lunch Box"
+  ],
+  "snack_min_ratio": 0.8,
+  "rhythm_staples": [],
+  "cycle_days": {},
+  "drink_groups": [
+   "Tea",
+   "Coffee",
+   "Soft drink",
+   "Sparkling water"
+  ],
+  "drink_patterns": [
+   "sodastream",
+   "soda mix",
+   "soda water",
+   "sparkling water",
+   "mineral water",
+   "cordial",
+   "drink syrup",
+   "tea bags",
+   "infusion",
+   "soft drink"
+  ],
+  "_drink_help": "Drinks: suggested when due or on special."
+ },
+ "stock_buffer_days": 10,
+ "cheapest": [],
+ "_cheapest_help": "Groups where the cheapest available option (per unit) is chosen each week from the usual product and its alternatives.",
+ "household_members": []
+}

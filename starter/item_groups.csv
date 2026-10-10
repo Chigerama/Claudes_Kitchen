@@ -1,0 +1,77 @@
+pattern,group
+chicken.*burgers,Chicken burgers
+kyiv,Chicken kyiv
+chicken breast (fillet|diced)|breast strips|chicken tenderloins,Chicken breast
+chicken thigh (fillet|skinless fillets)|chicken thigh fillets,Chicken thigh fillets
+chicken thigh cutlets,Chicken thigh cutlets
+chicken drumsticks|chicken maryland,Chicken drumsticks / maryland
+pork & beef mince|beef mince,Beef mince
+pork mince,Pork mince
+lamb mince,Lamb mince
+beef strips|stir-fry beef,Beef stir-fry strips
+beef chuck|gravy beef|diced beef|casserole beef,Slow-cook beef
+midloin chops|loin chops|lamb chops,Lamb chops
+meatballs,Meatballs
+chorizo,Chorizo
+salmon,Salmon
+bacon|pancetta,Bacon / pancetta
+\bmilk \d(\.\d)?l\b|\bmilk 2l|\bmilk 3l|\bmilk 1l,Milk
+free range eggs|\beggs\b,Eggs
+orange juice,Orange juice
+bagel,Bagels
+avocado,Avocados
+mandarin,Mandarins
+apples?\b,Apples
+banana,Bananas
+capsicum,Capsicum
+cherry tomatoes|truss cocktail|tomato grape|mini-roma,Snacking tomatoes
+tomato roma|roma tomato,Roma tomatoes
+passata,Passata
+diced tomatoes|tomatoes diced|crushed tomatoes|polpa|cherry tomatoes whole,Canned tomatoes
+tomato paste,Tomato paste
+baby leaf spinach|baby spinach,Baby spinach leaves
+chopped spinach,Frozen spinach
+mushroom,Mushrooms
+stock chicken|chicken stock,Chicken stock
+stock beef|beef stock,Beef stock
+sour cream,Sour cream
+cooking cream|thickened cream,Cream
+parmesan|pecorino,Parmesan
+butter block|salted butter|unsalted butter,Butter
+coleslaw|slaw kit,Coleslaw mix
+yoghurt,Yoghurt
+microwave.*(rice|basmati)|sticky rice,Microwave rice
+gnocchi,Gnocchi
+ravioli|tortellini,Ravioli / tortellini
+fettucine|fettuccine|pappardelle,Fresh pasta
+pasta (penne|spaghetti|rigatoni|fusilli|risoni)|penne|spaghetti|rigatoni|fusilli|risoni|orzo,Dried pasta
+soft drink cans|cola cans,Soft drink
+mineral water|soda water|sparkling water,Sparkling water
+potato chips|corn chips|pringles|chips variety,Chips / crisps
+crinkle cut chips|superfries|pub style chips|potato wedges|frozen chips,Frozen chips
+chocolate block|chocolate bar,Chocolate
+ice cream,Ice cream
+biscuits,Biscuits
+recipe base|seasoning mix|stock pot,Recipe bases / seasoning mixes
+garlic paste|pastes garlic|minced garlic,Garlic paste
+coconut cream,Coconut cream
+frozen onions|frozen diced onions,Frozen diced onions
+onions? (brown|bag)|red onions,Onions
+deodorant,Deodorant
+body wash|shower gel,Body wash
+shampoo,Shampoo
+toothpaste,Toothpaste
+fabric softener|fabric conditioner,Fabric softener
+laundry (liquid|powder|capsules)|laundry detergent,Laundry detergent
+laundry sanitiser,Laundry sanitiser
+dishwashing|dishwasher tablets,Dishwashing
+toilet paper|toilet tissue,Toilet paper
+paper towel,Paper towel
+black beans,Black beans
+peanut butter,Peanut butter
+resealable|storage bags|sandwich bags,Zip-lock bags
+dumplings,Dumplings
+tea bags|infusions|green tea,Tea
+coffee,Coffee
+mashed potato,Mashed potato
+stir fry mix|stir-fry mix|stir fry vegetables,Stir-fry vegetables
