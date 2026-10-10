@@ -219,4 +219,4 @@ To reset what Claude has learned, ask Claude to clear these files. Your purchase
 
 ## License
 
-Copyright © 2026 CaelumIT. Released under the [MIT License](LICENSE).
+Copyright © 2026 Chigerama. Released under the [MIT License](LICENSE).
