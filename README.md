@@ -51,31 +51,55 @@ To get invoices: woolworths.com.au → **My Account → Orders** → **Download*
 
 ---
 
-## 2. Installation
+## 2. Setup process
 
-1. Download `claudes-kitchen.plugin` from this repository's **Releases** page (or zip the repository's contents yourself and rename the file to `.plugin`). In the Claude desktop app, open the file or drag it into a chat, and press **Install**.
-2. Start a new Cowork task from the desktop app with your computer linked.
-3. Make sure Chrome is open, the Claude in Chrome extension is connected, and you're signed in to Woolworths.
+Setup takes about 30–45 minutes the first time, mostly while Claude reads your orders and prices. Work through these steps in order.
 
----
+### Step 1: Gather your order history
+1. Sign in at woolworths.com.au and go to **My Account → Orders**.
+2. Download the tax invoice PDF for at least 4 past orders (10 or more gives better results).
+3. Put them all in one new folder on your computer, for example `Documents/Kitchen`. This folder becomes Claude's home for your history, settings and recipes.
 
-## 3. Setup
+### Step 2: Check the requirements
+- The **Claude desktop app** on the computer that will run the weekly jobs, signed in to a plan that includes Cowork and scheduled tasks.
+- **Python 3** installed on that computer. Setup installs the PDF reader it needs.
+- **Google Chrome** with the **Claude in Chrome** extension installed and connected, and you signed in to woolworths.com.au in that Chrome.
+- The **Claude Code Remote** connector enabled in your Claude settings. The page uses it to start the cart run when you press **Confirm complete**. Without it everything still works, but you'll start the cart run by saying "push to cart" in chat.
 
-Say **"set up Claude's Kitchen"**. Claude walks you through it:
+### Step 3: Install the plugin
+1. Download `claudes-kitchen.plugin` from this repository's **Releases** page, or zip the repository's contents yourself and rename the file to end in `.plugin`.
+2. In the Claude desktop app, open the file (or drag it into a chat) and press **Install**.
 
-1. **Connect your invoices folder.** Claude copies its engine and starter files into a `smart/` subfolder. Nothing existing is overwritten.
-2. **Reads your history.** Invoices are turned into a purchase history, and similar products are grouped (e.g. all chicken breast cuts count as one item). You'll see your top 20 items.
-3. **Asks a few questions:**
-   - **Name.** "Claude" is the default; pick any name.
-   - **Household.** First names of the people who cook, for the dinner schedule.
-   - **City and timezone.** Used for the weather forecast and schedule. Only the city is stored.
-   - **Public holidays.** Which state or region's public and bank holidays apply, so Claude can plan around them.
-   - **Events you follow.** Any sports or other events you plan meals around, and whether you watch live or delayed. If delayed, Claude never mentions results (no spoilers).
-   - **Core items.** Things you want on the list every week (milk, eggs, bread…).
-   - **Never buy.** Things Claude should never suggest.
-   - **Recipes.** Keep the starter dinners or remove any you don't eat.
-4. **Publishes your page.** A private claude.ai page where you review and approve each week. Only you can open it unless you share it.
-5. **Creates five scheduled tasks** in your timezone (you can change the times):
+### Step 4: Start setup on the right computer
+1. In the desktop app, start a new task with your computer linked. Use the computer that will be on in the evenings: the scheduled jobs run there.
+2. Say **"set up Claude's Kitchen"**.
+3. When asked, connect the folder from Step 1. Approve the folder access prompt.
+
+### Step 5: Let Claude read your history
+Claude copies its engine and starter files into a `smart/` subfolder (nothing you already have is overwritten), reads your invoices, groups similar products (for example, all chicken breast cuts count as one item) and shows your top 20 items. If many items land in a group called "Other", Claude adds grouping rules and reads them again.
+
+### Step 6: Answer the setup questions
+Claude asks a few short rounds of questions:
+
+| Question | What it's used for |
+|---|---|
+| **Helper's name** | "Claude" by default; pick any name. Used on the page and in messages. |
+| **Household members** | First names of the people who cook. Used for the dinner schedule, the note box and how you're addressed. |
+| **City and timezone** | The weather forecast that shapes meal ideas, and when scheduled jobs run. Only the city is stored. |
+| **Public holidays** | Which state or region's public and bank holidays apply, so the weekly list can allow for them (order early, an extra dinner at home). |
+| **Events you follow** | Any sports seasons or other regular events you plan meals around, whether you watch live or delayed, and which day you'd like a weekly preview (Thursday by default). If you watch delayed, Claude never mentions results. Answer "none" to skip. |
+| **Core items** | Things that go on the list every week, with quantities (milk, eggs, bread…). |
+| **Never buy** | Products or groups Claude should never suggest. |
+| **Recipes** | Keep all the starter dinners or remove any you don't eat. You can add your own later. |
+
+### Step 7: First price check and your page
+1. Make sure Chrome is open and signed in to Woolworths. Claude looks up current prices and your cart. This is read-only: nothing is added to your cart during setup.
+2. Claude creates the on-request cart task, then builds and publishes your private page, **<name>'s Kitchen**, on claude.ai. Only you can open it unless you share it.
+3. When asked, allow the page its permissions: saving data, downloads, photos, and starting your cart task.
+4. Claude fills the page with your first list, your holidays and events, and a welcome note.
+
+### Step 8: Approve the scheduled tasks
+Claude creates these in your timezone, each tied to your computer and folder. You can change the times before or after:
 
 | When | What | Changes your cart? |
 |---|---|---|
@@ -85,7 +109,28 @@ Say **"set up Claude's Kitchen"**. Claude walks you through it:
 | Every night ~9:45pm | Reads your notes, does what you asked, and replies on the page | No |
 | Every night ~10:20pm | Tidies the "In the pantry…" list | No |
 
+Claude tells you whether each task runs automatically or asks for approval each time. Tasks that ask for approval will pause if nobody is there to approve, so you may want to switch them to automatic approval in each task's settings. Scheduled jobs only run while your computer is on with the Claude desktop app open.
+
+### Step 9: Check it works
+1. Open your page and leave a test note in **A word with Claude** (for example "Please add my favourite pasta bake"). It should get a reply after the evening run.
+2. Work through the five steps of **This week's shop** and press **Confirm complete**. Your cart should fill within a few minutes, and you'll get a notification.
+3. Check out on Woolworths as usual, then press **I've placed the order** on the page.
+
 After setup you don't need to save invoice PDFs any more. Claude reads each delivered order from your Woolworths account. Saving a PDF still works and replaces the website copy for that order.
+
+---
+
+## 3. Setup at a glance
+
+| Step | You do | Claude does |
+|---|---|---|
+| 1–3 | Download invoices, check requirements, install the plugin | — |
+| 4 | Start a task on your computer, say "set up Claude's Kitchen", connect the folder | Copies its files into `smart/` |
+| 5 | — | Reads your history and shows your top items |
+| 6 | Answer the questions | Saves your settings, holidays and events |
+| 7 | Sign in to Woolworths in Chrome, allow page permissions | Prices your list and publishes your page |
+| 8 | Approve the scheduled tasks | Sets up the weekly, nightly and cart jobs |
+| 9 | Try a note and a shop | Replies, fills the cart when you confirm |
 
 ---
 
